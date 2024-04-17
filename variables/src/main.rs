@@ -65,4 +65,20 @@ fn main() {
     println!("ℤ char is: {z}");
     let heart_eyed_cat = '😻';
     println!("😻 char is: {heart_eyed_cat}");
+
+    println!("# COMPOUND TYPES");
+    println!("## TUPLES");
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+    // println!("Tuple (i32, f64, u8) is : {tup}"); // -> fails! `(i32, f64, u8)` cannot be formatted with the default formatter
+    let (x, y, z) = tup; // destructuring, without noticing we shadowed z char...
+    println!("The value of x is: {x}");
+    println!("The value of y is: {y}");
+    println!("The value of z is: {z}");
+
+    let five_hundred = tup.0; // access tuple part by index
+    let six_point_four = tup.1;
+    let one = tup.2;
+    println!("The value of five_hundred is: {five_hundred}");
+    println!("The value of six_point_four is: {six_point_four}");
+    println!("The value of one is: {one}");
 }

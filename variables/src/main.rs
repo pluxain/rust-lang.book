@@ -1,19 +1,21 @@
 // Constants can be declared in global scope
 const THREE_HOURS_IN_SECONDS: u32 = 3 * 60 * 60;
 fn main() {
+    println!("# CONSTANTS");
     const UNITS_SECOND: &str = "sec"; // This is not in the book, but I wanted to know how to create a string variable
     println!("Three hours in seconds is: {THREE_HOURS_IN_SECONDS}{UNITS_SECOND}");
 
     const SIX_HOURS_IN_SECONDS: u32 = THREE_HOURS_IN_SECONDS * 2;
     println!("Six hours in seconds is: {SIX_HOURS_IN_SECONDS}{UNITS_SECOND}");
 
+    println!("# MUTABLE VARIABLES");
     let mut x = 5;
     println!("The value of x is : {x}");
 
     x = 6;
     println!("The value of x is : {x}");
 
-    // Shadowing
+    println!("# SHADOWING");
     let y = 5;
 
     let y = y + 1;
@@ -24,4 +26,28 @@ fn main() {
         println!("The value of y in the inner scope is: {y}");
     }
     println!("The value of y is: {y}");
+
+    println!("# SCALAR TYPES");
+    println!("## INTEGER AND FLOATS");
+    // addition
+    let sum = 5 + 10;
+    println!("5 + 10 is: {sum}");
+
+    // subtraction
+    let difference = 95.5 - 4.3;
+    println!("95.5 - 4.3 is: {difference}");
+
+    // multiplication
+    let product = 4 * 30;
+    println!("4 * 30 is: {product}");
+
+    // division
+    let quotient = 56.7 / 32.2;
+    println!("56.7 / 32.2 is: {quotient}");
+    let truncated = -5 / 3; // Results in -1
+    println!("-5 / 3 is: {truncated}");
+
+    // remainder
+    let remainder = 43 % 5;
+    println!("43 % 5 is: {remainder}");
 }

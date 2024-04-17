@@ -1,3 +1,5 @@
+use std::io;
+
 // Constants can be declared in global scope
 const THREE_HOURS_IN_SECONDS: u32 = 3 * 60 * 60;
 fn main() {
@@ -81,4 +83,41 @@ fn main() {
     println!("The value of five_hundred is: {five_hundred}");
     println!("The value of six_point_four is: {six_point_four}");
     println!("The value of one is: {one}");
+
+    println!("## ARRAYS");
+    let a: [i32; 5] = [1, 2, 3, 4, 5];
+    let _s = [3; 5]; // initialize and array with same value
+
+    // println!("The value of a is: {a}"); // -> fails! `[{integer}; 5]` cannot be formatted with the default formatter
+    let _months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]; // were know this is a fixed length list so array is a good choice.
+
+    println!("Please enter an array index.");
+
+    let mut index = String::new();
+
+    io::stdin()
+        .read_line(&mut index)
+        .expect("Failed to read line");
+
+    let index: usize = index
+        .trim()
+        .parse()
+        .expect("Index entered was not a number");
+
+    let element = a[index];
+
+    println!("The value of the element at index {index} is: {element}");
 }

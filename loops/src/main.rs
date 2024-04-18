@@ -28,4 +28,11 @@ fn main() {
         count += 1;
     }
     println!("End count = {count}");
+
+    let mut n = 3;
+    while n != 0 {
+        println!("{n}!");
+        n -= 1;
+    }
+    println!("LIFTOFF!!!");
 }

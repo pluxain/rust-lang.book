@@ -35,4 +35,26 @@ fn main() {
         n -= 1;
     }
     println!("LIFTOFF!!!");
+
+    let a = [10, 20, 30, 40, 50];
+    let mut index = 0;
+
+    println!("using `while` to loop through an array");
+    // while index < a.len() {
+    // Error prone as using hard coded number
+    while index < 5 {
+        println!("the value is: {}", a[index]);
+        index += 1;
+    }
+
+    println!("using `for ... in` to loop through an array");
+    for element in a {
+        println!("the value is: {element}");
+    }
+
+    println!("countdown using `for` loop");
+    for i in (1..4).rev() {
+        println!("{i}!");
+    }
+    println!("LIFTOFF!!!");
 }

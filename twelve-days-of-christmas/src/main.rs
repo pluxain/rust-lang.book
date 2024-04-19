@@ -3,7 +3,7 @@ fn main() {
 
     // Song pattern
     // On the first day of Christmas my true love sent to me
-    // A partridge in a pear tree
+    // A partridge in a pear tree.
 
     // On the second day of Christmas my true love sent to me
     // Two turtle doves,
@@ -29,9 +29,16 @@ fn main() {
         ["twelfth", "twelve drummers drumming"],
     ];
 
-    for c in ns {
-        println!("On the {} day of Christmas my true love sent to me", c[0]);
-        println!("{}", capitalize(c[1]));
+    for i in 0..ns.len() {
+        println!();
+        println!(
+            "On the {} day of Christmas my true love sent to me",
+            ns[i][0]
+        );
+        for j in 0..=i {
+            println!("{}", capitalize(ns[j][1]));
+        }
+        println!();
     }
 }
 

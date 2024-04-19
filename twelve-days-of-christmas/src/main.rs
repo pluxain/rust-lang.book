@@ -14,36 +14,32 @@ fn main() {
     // Two turtle doves,
     // And a partridge in a pear tree.
 
-    // Items
-    // a partridge in a pear tree
-    // two turtle doves,
-    // three French hens,
-    // four calling birds
-    // five gold rings
-    // six geese a-laying
-    // seven swans a-swimming
-    // eight maids a-milking
-    // nine ladies dancing
-    // ten lords a-leaping
-    // eleven pipers piping
-    // twelve drummers drumming
-
     let ns = [
-        ["one", "first"],
-        ["two", "second"],
-        ["three", "third"],
-        ["four", "fourth"],
-        ["five", "fifth"],
-        ["six", "sixth"],
-        ["seven", "seventh"],
-        ["eight", "eighth"],
-        ["nine", "ninth"],
-        ["ten", "tenth"],
-        ["eleven", "eleventh"],
-        ["twelve", "twelfth"],
+        ["first", "a partridge in a pear tree"],
+        ["second", "two turtle doves"],
+        ["third", "three French hens"],
+        ["fourth", "four calling birds"],
+        ["fifth", "five gold rings"],
+        ["sixth", "six geese a-laying"],
+        ["seventh", "seven swans a-swimming"],
+        ["eighth", "eight maids a-milking"],
+        ["ninth", "nine ladies dancing"],
+        ["tenth", "ten lords a-leaping"],
+        ["eleventh", "eleven pipers piping"],
+        ["twelfth", "twelve drummers drumming"],
     ];
 
     for c in ns {
-        println!("{}: {}", c[0], c[1]);
+        println!("On the {} day of Christmas my true love sent to me", c[0]);
+        println!("{}", capitalize(c[1]));
+    }
+}
+
+// @see https://stackoverflow.com/questions/38406793/why-is-capitalizing-the-first-letter-of-a-string-so-convoluted-in-rust/38406885?noredirect=1#comment65003459_38406885
+fn capitalize(s: &str) -> String {
+    let mut c = s.chars();
+    match c.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
     }
 }

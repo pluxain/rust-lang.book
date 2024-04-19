@@ -1,19 +1,6 @@
 fn main() {
     println!("# Twelve Days of Christmas");
 
-    // Song pattern
-    // On the first day of Christmas my true love sent to me
-    // A partridge in a pear tree.
-
-    // On the second day of Christmas my true love sent to me
-    // Two turtle doves,
-    // And a partridge in a pear tree.
-
-    // On the third day of Christmas my true love sent to me
-    // Three French hens,
-    // Two turtle doves,
-    // And a partridge in a pear tree.
-
     let ns = [
         ["first", "a partridge in a pear tree"],
         ["second", "two turtle doves"],
@@ -36,7 +23,7 @@ fn main() {
             ns[i][0]
         );
         for j in 0..=i {
-            println!("{}", capitalize(ns[j][1]));
+            println!("{}{}", capitalize(ns[j][1]), if i == j { "." } else { "," });
         }
         println!();
     }

@@ -26,21 +26,28 @@ fn main() {
                 }
             );
 
-            let mut value = String::new();
+            let mut input = String::new();
             io::stdin()
-                .read_line(&mut value)
+                .read_line(&mut input)
                 .expect("Failed to read line");
 
-            let value: f32 = match value.trim().parse() {
+            let input: f32 = match input.trim().parse() {
                 Ok(num) => num,
                 Err(_) => continue,
             };
 
+            let output = if direction == "1" {
+                input * 1.8 + 32.0
+            } else {
+                (input - 32.0) / 1.8
+            };
+
             println!(
-                "I will convert {value}°{} into °{}",
+                "{input}°{} converts to {output}°{}",
                 if direction == "1" { "C" } else { "F" },
                 if direction == "1" { "F" } else { "C" }
             );
+
             break 'main;
         }
     }

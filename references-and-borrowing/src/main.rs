@@ -26,6 +26,11 @@ fn main() {
 
     let _r3_prime = &mut _s_mut_prime; // then it works!
     println!("{}", _r3_prime);
+
+    // Dangling references
+    // let reference_to_nothing = dangle();
+
+    let no_dangle = no_dangle();
 }
 
 //  refer to some value without taking ownership of it
@@ -42,3 +47,15 @@ fn calculate_length(s: &String) -> usize {
 fn change_mut(s: &mut String) {
     s.push_str(", world!");
 }
+
+// dangle returns a reference to a String
+// fn dangle() -> &String {
+//     let s = String::from("dangle");
+//     &s // we return a reference to the String, s
+// } // Here, s goes out of scope, and is dropped. Its memory goes away.
+//   // Danger!
+
+fn no_dangle() -> String {
+    let s = String::from("no dangle");
+    s
+} //Ownership is moved out, and nothing is deallocated.

@@ -8,7 +8,9 @@ members = [
     "guessing_game",
     "hello_cargo",
     # "hello_world", // This is not a Cargo crate
-    "loops", "ownership",
+    "loops",
+    "ownership",
+    "references-and-borrowing",
     "twelve-days-of-christmas",
     "variables",
 ]

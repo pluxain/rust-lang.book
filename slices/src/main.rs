@@ -22,6 +22,24 @@ fn main() {
     let first = first_word(&s);
     // s.clear(); // error!
     println!("the first word is `{}`", first);
+
+    // String literals Slices
+    let s = "Hello Rust!";
+    let first = first_word(s);
+    println!("the first word is `{}`", first);
+
+    let my_string = String::from("hello rust");
+
+    // `first_word` works on Slices of String, whether partial or whole
+    let _word = first_word(&my_string[..6]);
+    let _word = first_word(&s[..]);
+    // `first_word` works on reference to String, which are equivalent to whole slices of String
+    let _word = first_word(&my_string);
+
+    let my_string_literal = "hello rust";
+    // `first_word` works on slices of string literals, whether partial or whole
+    let _word = first_word(&my_string_literal[..6]);
+    let _word = first_word(&my_string_literal[..]);
 }
 
 fn first_word_usize(s: &String) -> usize {
@@ -36,7 +54,9 @@ fn first_word_usize(s: &String) -> usize {
     s.len()
 }
 
-fn first_word(s: &String) -> &str {
+//Defining a function to take a string slice instead of a reference to a String
+// makes our API more general and useful without losing any functionality
+fn first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {

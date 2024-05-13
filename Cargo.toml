@@ -10,7 +10,7 @@ members = [
     # "hello_world", // This is not a Cargo crate
     "loops",
     "ownership",
-    "references-and-borrowing",
+    "references-and-borrowing", "slices",
     "twelve-days-of-christmas",
     "variables",
 ]

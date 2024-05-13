@@ -40,6 +40,15 @@ fn main() {
     // `first_word` works on slices of string literals, whether partial or whole
     let _word = first_word(&my_string_literal[..6]);
     let _word = first_word(&my_string_literal[..]);
+
+    // Because string literals are String Slices already,
+    // this works too
+    let _word = first_word(my_string_literal);
+
+    // Other slices
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[1..3];
+    assert_eq!(slice, &[2, 3]);
 }
 
 fn first_word_usize(s: &String) -> usize {

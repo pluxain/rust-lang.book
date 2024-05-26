@@ -17,6 +17,9 @@ fn main() {
     user1.sign_in_count = 2;
     user1.active = false;
     print_user(&user1);
+
+    let user2 = build_user(String::from("test@example.com"), String::from("player one"));
+    print_user(&user2);
 }
 
 fn print_user(u: &User) {
@@ -27,4 +30,13 @@ fn print_user(u: &User) {
         if u.active { "active" } else { "not active" },
         u.sign_in_count
     );
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        active: true,
+        email,
+        sign_in_count: 1,
+        username,
+    }
 }

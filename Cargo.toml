@@ -9,7 +9,7 @@ members = [
     "hello_cargo",
     # "hello_world", // This is not a Cargo crate
     "loops",
-    "ownership",
+    "ownership", "rectangles",
     "references-and-borrowing", "slices", "structs",
     "twelve-days-of-christmas",
     "variables",

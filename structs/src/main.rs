@@ -8,6 +8,8 @@ struct User {
 struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
+struct AlwaysEqual;
+
 fn main() {
     let mut user1 = User {
         active: true,
@@ -42,6 +44,9 @@ fn main() {
     print_color("black", black);
     // print_color("not working", origin); // Won't work as Point is not Color even though they have the same structure.
     print_point("origin", origin);
+
+    // Unit-Like struct
+    let _subject = AlwaysEqual;
 }
 
 fn print_color(colorname: &str, c: Color) {

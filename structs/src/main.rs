@@ -5,6 +5,9 @@ struct User {
     username: String,
 }
 
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
 fn main() {
     let mut user1 = User {
         active: true,
@@ -32,6 +35,21 @@ fn main() {
     user1.username = String::from("Jean-Claude");
     print_user(&user1); // Now it works and user3 stays as it was
     print_user(&user3);
+
+    // Tuple struct
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+    print_color("black", black);
+    // print_color("not working", origin); // Won't work as Point is not Color even though they have the same structure.
+    print_point("origin", origin);
+}
+
+fn print_color(colorname: &str, c: Color) {
+    println!("{} is {} {} {}", colorname, c.0, c.1, c.2);
+}
+
+fn print_point(pointname: &str, p: Point) {
+    println!("{} is {} {} {}", pointname, p.0, p.1, p.2);
 }
 
 fn print_user(u: &User) {

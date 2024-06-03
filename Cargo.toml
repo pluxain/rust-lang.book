@@ -7,7 +7,7 @@ members = [
     "functions",
     "guessing_game",
     "hello_cargo",
-    "logger",
+    "logger", "logging",
     # "hello_world", // This is not a Cargo crate
     "loops",
     "ownership",

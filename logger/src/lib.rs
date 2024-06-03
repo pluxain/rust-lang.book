@@ -2,6 +2,8 @@ use ctor::ctor;
 use log;
 use log4rs;
 
+// TODO: enable string interpolation like in println! macro
+// TODO: faire des macros instead of functions
 #[ctor]
 fn init() {
     log4rs::init_file("logger/logger.yaml", Default::default()).unwrap();

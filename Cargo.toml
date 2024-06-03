@@ -7,10 +7,14 @@ members = [
     "functions",
     "guessing_game",
     "hello_cargo",
+    "logger",
     # "hello_world", // This is not a Cargo crate
     "loops",
-    "ownership", "rectangles",
-    "references-and-borrowing", "slices", "structs",
+    "ownership",
+    "rectangles",
+    "references-and-borrowing",
+    "slices",
+    "structs",
     "twelve-days-of-christmas",
     "variables",
 ]

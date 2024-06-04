@@ -10,10 +10,17 @@ use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
 
 #[derive(Debug)]
 enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
     ChangeColor(i32, i32, i32),
+    Move { x: i32, y: i32 },
+    Quit,
+    Write(String),
+}
+
+impl Message {
+    fn call(&self) {
+        // method body would be defined here
+        log::debug!("call method: {:?}", self);
+    }
 }
 
 // Struct equivalents to the one enum
@@ -44,21 +51,28 @@ fn main() {
     log::debug!("{:?}", home);
     log::debug!("{:?}", loopback);
 
+    let e_change_color = Message::ChangeColor(120, 120, 120);
     let e_quit = Message::Quit;
     let e_move = Message::Move { x: 12, y: 30 };
     let e_write = Message::Write(String::from("I am moving"));
-    let e_change_color = Message::ChangeColor(120, 120, 120);
-    log::debug!("enum: {:?}", e_quit);
-    log::debug!("enum: {:?}", e_move);
-    log::debug!("enum: {:?}", e_write);
-    log::debug!("enum: {:?}", e_change_color);
 
-    let s_quit = QuitMessage;
-    let s_move = MoveMessage { x: 12, y: 30 };
-    let s_write = WriteMessage(String::from("I am moving"));
+    log::debug!("enum: {:?}", e_change_color);
+    log::debug!("enum: {:?}", e_move);
+    log::debug!("enum: {:?}", e_quit);
+    log::debug!("enum: {:?}", e_write);
+
+    e_change_color.call();
+    e_move.call();
+    e_quit.call();
+    e_write.call();
+
     let s_change_color = ChangeColorMessage(120, 120, 120);
-    log::debug!("struct: {:?}", s_quit);
-    log::debug!("struct: {:?}", s_move);
-    log::debug!("struct: {:?}", s_write);
+    let s_move = MoveMessage { x: 12, y: 30 };
+    let s_quit = QuitMessage;
+    let s_write = WriteMessage(String::from("I am moving struc"));
+
     log::debug!("struct: {:?}", s_change_color);
+    log::debug!("struct: {:?}", s_move);
+    log::debug!("struct: {:?}", s_quit);
+    log::debug!("struct: {:?}", s_write);
 }

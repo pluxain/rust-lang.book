@@ -182,6 +182,13 @@ fn main() {
         Coin::Quarter(UsState::California),
         value_in_cents(quarter)
     );
+
+    // Match with Option<T>
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+    log::debug!("plus one of {:?} is {:?}", five, six);
+    log::debug!("plus one of {:?} is {:?}", none, plus_one(none))
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -196,5 +203,12 @@ fn value_in_cents(coin: Coin) -> u8 {
             log::debug!("State quarter from {state:?}!");
             25
         }
+    }
+}
+
+fn plus_one(n: Option<i32>) -> Option<i32> {
+    match n {
+        None => None,
+        Some(i) => Some(i + 1),
     }
 }

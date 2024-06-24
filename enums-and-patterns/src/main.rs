@@ -40,11 +40,66 @@ struct WriteMessage(String); // tuple struct
 struct ChangeColorMessage(i32, i32, i32); // tuple struct
 
 #[derive(Debug)]
+enum UsState {
+    Alabama,
+    Alaska,
+    Arizona,
+    Arkansas,
+    California,
+    Colorado,
+    Connecticut,
+    Delaware,
+    Florida,
+    Georgia,
+    Hawaii,
+    Idaho,
+    Illinois,
+    Indiana,
+    Iowa,
+    Kansas,
+    Kentucky,
+    Louisiana,
+    Maine,
+    Maryland,
+    Massachusetts,
+    Michigan,
+    Minnesota,
+    Mississippi,
+    Missouri,
+    Montana,
+    Nebraska,
+    Nevada,
+    NewHampshire,
+    NewJersey,
+    NewMexico,
+    NewYork,
+    NorthCarolina,
+    NorthDakota,
+    Ohio,
+    Oklahoma,
+    Oregon,
+    Pennsylvania,
+    RhodeIsland,
+    SouthCarolina,
+    SouthDakota,
+    Tennessee,
+    Texas,
+    Utah,
+    Vermont,
+    Virginia,
+    Washington,
+    WashingtonDC,
+    WestVirginia,
+    Wisconsin,
+    Wyoming,
+}
+
+#[derive(Debug)]
 enum Coin {
     Penny,
     Nickel,
     Dime,
-    Quarter,
+    Quarter(UsState),
 }
 
 fn main() {
@@ -121,10 +176,10 @@ fn main() {
         value_in_cents(dime)
     );
 
-    let quarter = Coin::Quarter;
+    let quarter = Coin::Quarter(UsState::California);
     log::debug!(
         "Value in cents for a {:?} is {:?}",
-        Coin::Quarter,
+        Coin::Quarter(UsState::California),
         value_in_cents(quarter)
     );
 }
@@ -137,6 +192,9 @@ fn value_in_cents(coin: Coin) -> u8 {
         }
         Coin::Nickel => 5,
         Coin::Dime => 10,
-        Coin::Quarter => 25,
+        Coin::Quarter(state) => {
+            log::debug!("State quarter from {state:?}!");
+            25
+        }
     }
 }

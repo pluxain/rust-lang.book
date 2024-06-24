@@ -75,4 +75,20 @@ fn main() {
     log::debug!("struct: {:?}", s_move);
     log::debug!("struct: {:?}", s_quit);
     log::debug!("struct: {:?}", s_write);
+
+    // Option
+    let some_number = Some(5);
+    let some_char = Some('e');
+    let absent_number: Option<i32> = None;
+    log::debug!("Option<i32> initialized with Some(5): {:?}", some_number);
+    log::debug!("Option<Char> initialized with Some('e'): {:?}", some_char);
+    log::debug!(
+        "Option<i32> initialized with None needs a declared type: {:?}",
+        absent_number
+    );
+
+    let _x: i8 = 5;
+    let _y: Option<i8> = Some(5);
+
+    // let sum = _x + _y; -> won't work as compiler is not sure Option<i8> contains a value
 }

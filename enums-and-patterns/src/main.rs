@@ -39,6 +39,14 @@ struct WriteMessage(String); // tuple struct
 #[derive(Debug)]
 struct ChangeColorMessage(i32, i32, i32); // tuple struct
 
+#[derive(Debug)]
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
     log::info!("Enums");
@@ -91,4 +99,41 @@ fn main() {
     let _y: Option<i8> = Some(5);
 
     // let sum = _x + _y; -> won't work as compiler is not sure Option<i8> contains a value
+
+    let penny = Coin::Penny;
+    log::debug!(
+        "Value in cents for a {:?} is {:?}",
+        Coin::Penny,
+        value_in_cents(penny)
+    );
+
+    let nickel = Coin::Nickel;
+    log::debug!(
+        "Value in cents for a {:?} is {:?}",
+        Coin::Nickel,
+        value_in_cents(nickel)
+    );
+    let dime = Coin::Dime;
+
+    log::debug!(
+        "Value in cents for a {:?} is {:?}",
+        Coin::Dime,
+        value_in_cents(dime)
+    );
+
+    let quarter = Coin::Quarter;
+    log::debug!(
+        "Value in cents for a {:?} is {:?}",
+        Coin::Quarter,
+        value_in_cents(quarter)
+    );
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25,
+    }
 }

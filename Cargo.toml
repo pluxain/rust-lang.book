@@ -2,7 +2,7 @@
 
 members = [
     "branches",
-    "converter",
+    "converter", "enums-and-patterns",
     "fibonacci",
     "functions",
     "guessing_game",

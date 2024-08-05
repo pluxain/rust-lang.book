@@ -183,6 +183,16 @@ fn main() {
         value_in_cents(quarter)
     );
 
+    let coin = Coin::Quarter(UsState::Alabama);
+    let mut count = 0;
+    if let Coin::Quarter(state) = coin {
+        log::debug!("State quarter from {:?}!", state);
+        log::debug!("Count is {:?}!", count);
+    } else {
+        count += 1;
+        log::debug!("Count is now {:?}!", count);
+    }
+
     // Match with Option<T>
     let five = Some(5);
     let six = plus_one(five);

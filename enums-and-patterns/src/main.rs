@@ -197,6 +197,22 @@ fn main() {
         7 => remove_fancy_hat(),
         other => move_player(other),
     }
+
+    log::debug!("New rule ! Reroll on other than 3 or 7");
+    let dice_roll = 7;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => reroll(),
+    }
+
+    log::debug!("New rule ! Do nothing on other than 3 or 7");
+    let dice_roll = 3;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => (),
+    }
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -228,6 +244,11 @@ fn add_fancy_hat() {
 fn remove_fancy_hat() {
     log::debug!("Remove fancy hat!");
 }
+
 fn move_player(num_spaces: u8) {
     log::debug!("Move player to {}", num_spaces);
+}
+
+fn reroll() {
+    log::debug!("Reroll!");
 }

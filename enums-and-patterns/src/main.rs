@@ -188,7 +188,15 @@ fn main() {
     let six = plus_one(five);
     let none = plus_one(None);
     log::debug!("plus one of {:?} is {:?}", five, six);
-    log::debug!("plus one of {:?} is {:?}", none, plus_one(none))
+    log::debug!("plus one of {:?} is {:?}", none, plus_one(none));
+
+    // Catch-all Patterns and the _ Placeholder
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        other => move_player(other),
+    }
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -211,4 +219,15 @@ fn plus_one(n: Option<i32>) -> Option<i32> {
         None => None,
         Some(i) => Some(i + 1),
     }
+}
+
+fn add_fancy_hat() {
+    log::debug!("Add fancy hat!");
+}
+
+fn remove_fancy_hat() {
+    log::debug!("Remove fancy hat!");
+}
+fn move_player(num_spaces: u8) {
+    log::debug!("Move player to {}", num_spaces);
 }

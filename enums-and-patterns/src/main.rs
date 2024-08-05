@@ -213,6 +213,12 @@ fn main() {
         7 => remove_fancy_hat(),
         _ => (),
     }
+
+    // Concise Control Flow with if let
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        log::debug!("The maximum is configured to {}", max);
+    }
 }
 
 fn value_in_cents(coin: Coin) -> u8 {

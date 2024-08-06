@@ -42,6 +42,14 @@ mod back_of_house {
         }
     }
 
+    // Enums aren’t very useful unless their variants are public;
+    // it would be annoying to have to annotate all enum variants with pub in every case,
+    // so the default for enum variants is to be public.
+    pub enum Appetizer {
+        Soup,
+        Salad,
+    }
+
     pub fn fix_incorrect_order() {
         println!("Fix incorrect order!");
         cook_order();
@@ -71,6 +79,8 @@ pub fn eat_at_restaurant() {
     // The next line won't compile if we uncomment it; we're not allowed
     // to see or modify the seasonal fruit that comes with the meal
     // meal.seasonal_fruit = String::from("blueberries");
+    let order1 = crate::back_of_house::Appetizer::Soup;
+    let order2 = crate::back_of_house::Appetizer::Salad;
 
     crate::front_of_house::serving::serve_order();
     crate::front_of_house::serving::take_payment();

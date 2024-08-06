@@ -24,6 +24,18 @@ mod front_of_house {
     }
 }
 
+mod back_of_house {
+    pub fn fix_incorrect_order() {
+        println!("Fix incorrect order!");
+        cook_order();
+        super::deliver_order();
+    }
+
+    fn cook_order() {
+        println!("Cook order!");
+    }
+}
+
 pub fn eat_at_restaurant() {
     // Absolut path -> preferred
     crate::front_of_house::hosting::add_to_waitlist();
@@ -36,4 +48,12 @@ pub fn eat_at_restaurant() {
     crate::front_of_house::serving::take_order();
     crate::front_of_house::serving::serve_order();
     crate::front_of_house::serving::take_payment();
+}
+
+pub fn fix_incorrect_order() {
+    crate::back_of_house::fix_incorrect_order();
+}
+
+fn deliver_order() {
+    println!("Deliver order!");
 }

@@ -1,15 +1,39 @@
 mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
+    pub mod hosting {
+        pub fn add_to_waitlist() {
+            println!("Add to waitlist!");
+        }
 
-        fn seat_at_table() {}
+        pub fn seat_at_table() {
+            println!("Seat at table!");
+        }
     }
 
-    mod serving {
-        fn take_order() {}
+    pub mod serving {
+        pub fn take_order() {
+            println!("Take order!");
+        }
 
-        fn serve_order() {}
+        pub fn serve_order() {
+            println!("Serve order!");
+        }
 
-        fn take_payment() {}
+        pub fn take_payment() {
+            println!("Take payment!");
+        }
     }
+}
+
+pub fn eat_at_restaurant() {
+    // Absolut path -> preferred
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // Relative path
+    // front_of_house::hosting::add_to_waitlist();
+
+    crate::front_of_house::hosting::seat_at_table();
+
+    crate::front_of_house::serving::take_order();
+    crate::front_of_house::serving::serve_order();
+    crate::front_of_house::serving::take_payment();
 }

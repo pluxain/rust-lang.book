@@ -4,8 +4,8 @@ use restaurant::customer::eat_at_restaurant;
 use restaurant::fix_incorrect_order;
 use std::collections::HashMap;
 // We import only the parent modules of both Result types to avoid collision
-// use std::fmt;
-// use std::io;
+// use std::fmt::Result;
+// use std::io::Result as IoResult;
 
 fn main() {
     let mut map = HashMap::new();
@@ -14,5 +14,5 @@ fn main() {
     fix_incorrect_order();
 }
 
-// fn function1() -> fmt::Result {}
-// fn function2() -> io::Result<()> {}
+// fn function1() -> Result {}
+// fn function2() -> IoResult<()> {}

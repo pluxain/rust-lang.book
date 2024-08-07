@@ -62,29 +62,36 @@ mod back_of_house {
 }
 
 use crate::front_of_house::hosting;
-pub fn eat_at_restaurant() {
-    // Absolut path -> preferred
-    hosting::add_to_waitlist();
 
-    // Relative path
-    // front_of_house::hosting::add_to_waitlist();
+pub mod customer {
+    use super::hosting;
+    // Or directly declare the use here
+    // use crate::front_of_house::hosting;
 
-    hosting::seat_at_table();
+    pub fn eat_at_restaurant() {
+        // Absolut path -> preferred
+        hosting::add_to_waitlist();
 
-    crate::front_of_house::serving::take_order();
-    // Order a breakfast in the Summer with Rye toast
-    let mut meal = crate::back_of_house::Breakfast::summer("Rye");
-    // Change our mind about what bread we'd like
-    meal.toast = String::from("Wheat");
-    println!("I'd like a {} toast please", meal.toast);
-    // The next line won't compile if we uncomment it; we're not allowed
-    // to see or modify the seasonal fruit that comes with the meal
-    // meal.seasonal_fruit = String::from("blueberries");
-    let order1 = crate::back_of_house::Appetizer::Soup;
-    let order2 = crate::back_of_house::Appetizer::Salad;
+        // Relative path
+        // front_of_house::hosting::add_to_waitlist();
 
-    crate::front_of_house::serving::serve_order();
-    crate::front_of_house::serving::take_payment();
+        hosting::seat_at_table();
+
+        crate::front_of_house::serving::take_order();
+        // Order a breakfast in the Summer with Rye toast
+        let mut meal = crate::back_of_house::Breakfast::summer("Rye");
+        // Change our mind about what bread we'd like
+        meal.toast = String::from("Wheat");
+        println!("I'd like a {} toast please", meal.toast);
+        // The next line won't compile if we uncomment it; we're not allowed
+        // to see or modify the seasonal fruit that comes with the meal
+        // meal.seasonal_fruit = String::from("blueberries");
+        let order1 = crate::back_of_house::Appetizer::Soup;
+        let order2 = crate::back_of_house::Appetizer::Salad;
+
+        crate::front_of_house::serving::serve_order();
+        crate::front_of_house::serving::take_payment();
+    }
 }
 
 pub fn fix_incorrect_order() {

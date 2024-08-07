@@ -61,6 +61,9 @@ mod back_of_house {
     }
 }
 
+// Note: this is the normal idiom when specifying a path to use a function
+// the parent module is imported rather than the function directly
+// so that when we use it we know precisely where the function comes from
 use crate::front_of_house::hosting;
 
 pub mod customer {

@@ -61,14 +61,15 @@ mod back_of_house {
     }
 }
 
+use crate::front_of_house::hosting;
 pub fn eat_at_restaurant() {
     // Absolut path -> preferred
-    crate::front_of_house::hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
 
     // Relative path
     // front_of_house::hosting::add_to_waitlist();
 
-    crate::front_of_house::hosting::seat_at_table();
+    hosting::seat_at_table();
 
     crate::front_of_house::serving::take_order();
     // Order a breakfast in the Summer with Rye toast

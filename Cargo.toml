@@ -1,6 +1,6 @@
 [workspace]
 
-members = [
+members = [ "backyard",
     "branches",
     "converter", "enums-and-patterns",
     "fibonacci",
@@ -9,10 +9,10 @@ members = [
     "hello_cargo",
     "logging",
     # "hello_world", // This is not a Cargo crate
-    "loops",
+    "loops", "managing-growing-project",
     "ownership",
     "rectangles",
-    "references-and-borrowing",
+    "references-and-borrowing", "restaurant",
     "slices",
     "structs",
     "twelve-days-of-christmas",

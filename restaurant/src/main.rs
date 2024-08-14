@@ -1,12 +1,9 @@
 // The normal idiom to import struc, enums and other items than function is
 // to import them directly
-use restaurant;
-use restaurant::customer;
-use restaurant::hosting;
+use restaurant::{self, customer, hosting};
 use std::collections::HashMap;
 // We import only the parent modules of both Result types to avoid collision
-// use std::fmt::Result;
-// use std::io::Result as IoResult;
+// use std::{fmt::Result, io::Result as IoResult};
 
 fn main() {
     let mut map = HashMap::new();

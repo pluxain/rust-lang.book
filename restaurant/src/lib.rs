@@ -89,8 +89,8 @@ pub mod customer {
         // The next line won't compile if we uncomment it; we're not allowed
         // to see or modify the seasonal fruit that comes with the meal
         // meal.seasonal_fruit = String::from("blueberries");
-        let order1 = crate::back_of_house::Appetizer::Soup;
-        let order2 = crate::back_of_house::Appetizer::Salad;
+        let _order1 = crate::back_of_house::Appetizer::Soup;
+        let _order2 = crate::back_of_house::Appetizer::Salad;
 
         crate::front_of_house::serving::serve_order();
         crate::front_of_house::serving::take_payment();

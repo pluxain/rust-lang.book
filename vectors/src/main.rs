@@ -52,4 +52,27 @@ fn main() {
         *i += 50;
     }
     log::info!("After iterating with mutable: {:?}", v);
+
+    log::info!("Using an Enum to store multiple Types");
+    #[derive(Debug)]
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("blue")),
+        SpreadsheetCell::Float(10.12),
+    ];
+
+    log::info!("row is {:?}", row);
+    for i in &row {
+        match i {
+            SpreadsheetCell::Int(int) => log::info!("i is an Int: {int}"),
+            SpreadsheetCell::Float(float) => log::info!("i is a Float: {float}"),
+            SpreadsheetCell::Text(text) => log::info!("i is a Text: {text}"),
+        }
+    }
 }

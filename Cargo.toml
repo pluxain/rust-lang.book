@@ -16,7 +16,7 @@ members = [ "backyard",
     "slices",
     "structs",
     "twelve-days-of-christmas",
-    "variables",
+    "variables", "vectors",
 ]
 
 resolver = "1"

@@ -39,4 +39,17 @@ fn main() {
         "Accessing a nonexistent value via `get`: {:?}",
         does_not_exist
     );
+
+    log::info!("Iterating over values in a Vector");
+    let v = vec![100, 32, 57];
+    for i in &v {
+        log::info!("Iterating: {i}");
+    }
+
+    let mut v = vec![100, 32, 57];
+    log::info!("Before iterating with mutable: {:?}", v);
+    for i in &mut v {
+        *i += 50;
+    }
+    log::info!("After iterating with mutable: {:?}", v);
 }

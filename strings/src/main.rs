@@ -66,4 +66,12 @@ fn main() {
         "s1 ({:?}) is still available as `format!` uses references",
         s1
     );
+
+    log::info!("Slicing Strings");
+    let hello = "Здравствуйте";
+    let s = &hello[0..4];
+    log::info!("{:?}", s);
+    // let s = &hello[0..1]; // -> panic as chars in the String are two bytes in this case.
+    log::info!("{:?}", s);
+    // log::info!("{:?}", s);
 }

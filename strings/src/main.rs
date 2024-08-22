@@ -32,4 +32,38 @@ fn main() {
         let hello = String::from(s);
         log::info!("{:?}", hello);
     }
+
+    log::info!("Updating a String");
+    log::info!("with methods `push_str` and `push`");
+    let mut s = String::from("foo");
+    let s2 = "bar";
+    s.push_str(s2);
+    log::info!("{:?}", s);
+    log::info!("s2 is {s2}");
+
+    let mut s = String::from("lo");
+    s.push('l');
+    log::info!("{:?}", s);
+
+    log::info!("with `+` operator");
+    let s1 = String::from("Hello, ");
+    let mut s2 = String::from("world!");
+    let s3 = s1 + &s2; // note: s1 has been moved here and can no longer be used;
+    log::info!("s3 is {:?} and s2 is {:?}", s3, s2);
+    s2.push_str(" Hahaha!");
+    log::info!("s3 is {:?} and s2 is {:?}", s3, s2);
+
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+    let s = s1 + "-" + &s2 + "-" + &s3;
+    log::info!("{:?}", s);
+    // log::info!("{:?}", s1); // -> fails as s1 was moved into s
+    let s1 = String::from("tic");
+    let s = format!("{s1}-{s2}-{s3}");
+    log::info!("{:?}", s);
+    log::info!(
+        "s1 ({:?}) is still available as `format!` uses references",
+        s1
+    );
 }

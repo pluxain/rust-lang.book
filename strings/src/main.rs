@@ -74,4 +74,19 @@ fn main() {
     // let s = &hello[0..1]; // -> panic as chars in the String are two bytes in this case.
     log::info!("{:?}", s);
     // log::info!("{:?}", s);
+
+    log::info!("Methods for Iterating over Strings");
+    let mut i = 0;
+    for c in hello.chars() {
+        log::info!("Char at {i} in {:?} is {:?}", hello, c);
+        i += 1;
+    }
+
+    i = 0;
+    for b in hello.bytes() {
+        log::info!("Byte at {i} in {:?} is {:?}", hello, b);
+        i += 1;
+    }
+
+    log::warn!("Strings Are Not So Simple");
 }

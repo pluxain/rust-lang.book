@@ -10,4 +10,15 @@ fn main() {
     scores.insert(String::from("blue"), 10);
     scores.insert(String::from("red"), 50);
     log::info!("{:?}", scores);
+
+    log::info!("Accessing values in a Hashmap");
+    let team_name = String::from("blue");
+    let score = scores.get(&team_name).copied().unwrap_or(0);
+    log::info!("score for {team_name} is {score}.");
+    let team_name = String::from("purple");
+    let score = scores.get(&team_name).copied().unwrap_or(0);
+    log::info!("score for {team_name} is {score}.");
+    for (key, value) in scores {
+        log::info!("{key}: {value}");
+    }
 }

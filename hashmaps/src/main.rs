@@ -4,14 +4,14 @@ use std::collections::HashMap;
 
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
-    log::info!("Hashmaps!");
-    log::info!("Creating Hashmaps");
+    log::info!("HashMaps!");
+    log::info!("Creating HashMaps");
     let mut scores = HashMap::new();
     scores.insert(String::from("blue"), 10);
     scores.insert(String::from("red"), 50);
     log::info!("{:?}", scores);
 
-    log::info!("Accessing values in a Hashmap");
+    log::info!("Accessing values in a HashMap");
     let team_name = String::from("blue");
     let score = scores.get(&team_name).copied().unwrap_or(0);
     log::info!("score for {team_name} is {score}.");
@@ -22,7 +22,7 @@ fn main() {
         log::info!("{key}: {value}");
     }
 
-    log::info!("Hashmaps and ownership");
+    log::info!("HashMaps and ownership");
     let field_name = String::from("favourite color");
     let field_value = String::from("blue");
     let mut map = HashMap::new();

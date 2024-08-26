@@ -5,7 +5,7 @@ members = [ "backyard",
     "converter", "enums-and-patterns",
     "fibonacci",
     "functions",
-    "guessing_game",
+    "guessing_game", "hashmaps",
     "hello_cargo",
     "logging",
     # "hello_world", // This is not a Cargo crate
@@ -13,10 +13,10 @@ members = [ "backyard",
     "ownership",
     "rectangles",
     "references-and-borrowing", "restaurant",
-    "slices",
+    "slices", "strings",
     "structs",
     "twelve-days-of-christmas",
-    "variables",
+    "variables", "vectors",
 ]
 
 resolver = "1"

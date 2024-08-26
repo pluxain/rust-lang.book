@@ -21,4 +21,22 @@ fn main() {
     for (key, value) in scores {
         log::info!("{key}: {value}");
     }
+
+    log::info!("Hashmaps and ownership");
+    let field_name = String::from("favourite color");
+    let field_value = String::from("blue");
+    let mut map = HashMap::new();
+    map.insert(field_name, field_value);
+    // log::error!("{field_name} is {field_value}"); // -> fails as the map has taken ownership of the Strings.
+    // log::info!(
+    //     "{} is {}",
+    //     field_name,
+    //     map.get(&field_name).unwrap_or(&String::from("unknown"))
+    // ); // -> fails as well
+    log::info!(
+        "{} is {}",
+        String::from("favourite color"),
+        map.get(&String::from("favourite color"))
+            .unwrap_or(&String::from("unknown"))
+    );
 }

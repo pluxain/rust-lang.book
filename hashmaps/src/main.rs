@@ -39,4 +39,25 @@ fn main() {
         map.get(&String::from("favourite color"))
             .unwrap_or(&String::from("unknown"))
     );
+
+    log::info!("Updating a HashMap");
+    log::info!("Overwriting a value");
+    let mut scores = HashMap::new();
+    scores.insert(String::from("blue"), 10);
+    scores.insert(String::from("blue"), 25);
+    log::info!("{scores:?}");
+    log::info!("Adding a Key and Value only if Key is not present");
+    let mut scores = HashMap::new();
+    scores.insert(String::from("blue"), 10);
+    scores.entry(String::from("yellow")).or_insert(50);
+    scores.entry(String::from("blue")).or_insert(50);
+    log::info!("{scores:?}");
+    log::info!("Updating a Value based on the old Value");
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    log::info!("{map:?}");
 }

@@ -29,6 +29,16 @@ fn main() {
         }
         break 'prompt;
     }
+    numbers.sort();
     log::info!("{numbers:?}");
-    // TODO: sort Vector
+    log::info!(
+        "The median value of the list [{}] is {}",
+        numbers
+            .iter()
+            .map(|&n| n.to_string())
+            .collect::<Vec<String>>()
+            .join(", "),
+        numbers.get(numbers.len() / 2).unwrap()
+    );
+    // TODO: display mode
 }

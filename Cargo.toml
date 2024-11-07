@@ -6,6 +6,7 @@ members = [
     "branches",
     "converter",
     "enums-and-patterns",
+    "company-challenge",
     "fibonacci",
     "functions",
     "generics-traits",

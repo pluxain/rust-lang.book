@@ -10,7 +10,7 @@ members = [ "backyard",
     "logging",
     # "hello_world", // This is not a Cargo crate
     "loops", "managing-growing-project", "median-and-mode-challenge",
-    "ownership",
+    "ownership", "pig-latin-challenge",
     "rectangles",
     "references-and-borrowing", "restaurant",
     "slices", "strings",

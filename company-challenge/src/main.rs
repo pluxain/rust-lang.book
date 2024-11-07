@@ -32,8 +32,9 @@ fn main() {
         )
         .unwrap();
         log::info!("input is `{input}`");
+        let mut iter = input.split_whitespace();
 
-        let command = match input.split_whitespace().next().unwrap().to_lowercase() {
+        let command = match iter.next().unwrap().to_lowercase() {
             _c if _c == String::from("add") => Command::Add,
             _c if _c == String::from("remove") => Command::Remove,
             _ => {
@@ -46,6 +47,9 @@ fn main() {
             }
         };
         log::info!("command is `{command:?}`");
+
+        let name = iter.next().unwrap();
+        log::info!("name is `{name}`");
         break;
     }
 }

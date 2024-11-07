@@ -6,6 +6,12 @@ use log;
 use log4rs;
 use std::io::{self, stdin};
 
+#[derive(Debug)]
+enum Command {
+    Add,
+    Remove,
+}
+
 fn prompt(p: &str) -> Result<String, io::Error> {
     log::info!("Prompting");
     let mut input = String::new();
@@ -26,6 +32,20 @@ fn main() {
         )
         .unwrap();
         log::info!("input is `{input}`");
+
+        let command = match input.split_whitespace().next().unwrap().to_lowercase() {
+            _c if _c == String::from("add") => Command::Add,
+            _c if _c == String::from("remove") => Command::Remove,
+            _ => {
+                println!(
+                    "Please use a valid command `{:?}` or `{:?}`",
+                    Command::Add,
+                    Command::Remove
+                );
+                continue;
+            }
+        };
+        log::info!("command is `{command:?}`");
         break;
     }
 }

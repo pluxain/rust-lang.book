@@ -4,8 +4,28 @@
 
 use log;
 use log4rs;
+use std::io::{self, stdin};
+
+fn prompt(p: &str) -> Result<String, io::Error> {
+    log::info!("Prompting");
+    let mut input = String::new();
+    println!("{p}");
+    match stdin().read_line(&mut input) {
+        Ok(_) => Ok(input.trim().to_string()),
+        Err(err) => Err(err),
+    }
+}
 
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
     log::info!("challenge: company");
+
+    loop {
+        let input = prompt(
+            "What do you want to do (ex: `Add Robert to DevOps`, `Remove Wendy from Pirates`)",
+        )
+        .unwrap();
+        log::info!("input is `{input}`");
+        break;
+    }
 }

@@ -1,6 +1,6 @@
 [workspace]
 
-members = [ "backyard",
+members = [ "adder", "backyard",
     "branches",
     "converter", "enums-and-patterns",
     "fibonacci",

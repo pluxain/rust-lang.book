@@ -49,6 +49,16 @@ mod tests {
     }
 
     #[test]
+    fn exploration_with_result() -> Result<(), String> {
+        let result = add(2, 2);
+        if result == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four"))
+        }
+    }
+
+    #[test]
     fn another() {
         panic!("Make this test fail");
     }

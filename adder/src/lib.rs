@@ -7,8 +7,7 @@ pub fn add_two(a: usize) -> usize {
 }
 
 pub fn greeting(name: &str) -> String {
-    String::from("Hello!")
-    // format!("Hello {name}!")
+    format!("Hello {name}!")
 }
 
 #[derive(Debug)]
@@ -59,6 +58,7 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Make this test fail")]
     fn another() {
         panic!("Make this test fail");
     }

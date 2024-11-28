@@ -7,6 +7,22 @@ struct Point<T, U> {
     y: U,
 }
 
+impl<T, U> Point<T, U> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+
+    fn y(&self) -> &U {
+        &self.y
+    }
+}
+
+impl Point<f32, f32> {
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
 
@@ -47,7 +63,7 @@ fn main() {
 
     log::info!("In Struct Definitions");
     let integer = Point { x: 5, y: 10 };
-    let float = Point { x: 1.0, y: 4.0 };
+    let float: Point<f32, f32> = Point { x: 1.0, y: 4.0 };
     let mixed = Point { x: 5, y: 4.0 };
     log::debug!(
         "An integer Point {:?} with x being {} and y being {}",
@@ -66,5 +82,30 @@ fn main() {
         mixed,
         mixed.x,
         mixed.y
+    );
+
+    log::info!("In Enum Definitions");
+    log::info!("See Option<T> chapter 6 and Result<T, E> chapter 9");
+
+    log::info!("In Method Definitions");
+    log::info!(
+        "Using generic methods for Point<T, U>, x is {} and y is {}",
+        float.x(),
+        float.y()
+    );
+    log::info!(
+        "Using generic methods for Point<i32, f32>, x is {} and y is {}",
+        mixed.x(),
+        mixed.y()
+    );
+    log::info!(
+        "Using generic methods for Point<i32, f32>, x is {} and y is {}",
+        integer.x(),
+        integer.y()
+    );
+    log::info!(
+        "Using generic Method implemented only for Point<f32, f32>, distance from origin for {:?} is {}",
+        float,
+        float.distance_from_origin()
     );
 }

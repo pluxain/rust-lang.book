@@ -1,22 +1,33 @@
 [workspace]
 
-members = [ "adder", "backyard",
+members = [
+    "adder",
+    "backyard",
     "branches",
-    "converter", "enums-and-patterns",
+    "converter",
+    "enums-and-patterns",
     "fibonacci",
     "functions",
-    "guessing_game", "hashmaps",
+    "generics-traits",
+    "guessing_game",
+    "hashmaps",
     "hello_cargo",
     "logging",
     # "hello_world", // This is not a Cargo crate
-    "loops", "managing-growing-project", "median-and-mode-challenge",
-    "ownership", "pig-latin-challenge",
+    "loops",
+    "managing-growing-project",
+    "median-and-mode-challenge",
+    "ownership",
+    "pig-latin-challenge",
     "rectangles",
-    "references-and-borrowing", "restaurant",
-    "slices", "strings",
+    "references-and-borrowing",
+    "restaurant",
+    "slices",
+    "strings",
     "structs",
     "twelve-days-of-christmas",
-    "variables", "vectors",
+    "variables",
+    "vectors",
 ]
 
 resolver = "1"

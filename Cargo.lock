@@ -139,6 +139,14 @@ name = "functions"
 version = "0.1.0"
 
 [[package]]
+name = "generics-traits"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "log4rs",
+]
+
+[[package]]
 name = "getrandom"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -1,6 +1,12 @@
 use log;
 use log4rs;
 
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
 
@@ -38,4 +44,20 @@ fn main() {
     let chars = vec!['y', 'm', 'a', 'q'];
     let result = largest(&chars);
     log::info!("The largest chars from {:?} is {}", chars, result);
+
+    log::info!("In Struct Definitions");
+    let integer = Point { x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 4.0 };
+    log::debug!(
+        "An integer Point {:?} with x being {} and y being {}",
+        integer,
+        integer.x,
+        integer.y
+    );
+    log::debug!(
+        "A float Point {:?} with x being {} and y being {}",
+        float,
+        float.x,
+        float.y
+    );
 }

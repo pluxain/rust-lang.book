@@ -2,9 +2,9 @@ use log;
 use log4rs;
 
 #[derive(Debug)]
-struct Point<T> {
+struct Point<T, U> {
     x: T,
-    y: T,
+    y: U,
 }
 
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
@@ -48,6 +48,7 @@ fn main() {
     log::info!("In Struct Definitions");
     let integer = Point { x: 5, y: 10 };
     let float = Point { x: 1.0, y: 4.0 };
+    let mixed = Point { x: 5, y: 4.0 };
     log::debug!(
         "An integer Point {:?} with x being {} and y being {}",
         integer,
@@ -59,5 +60,11 @@ fn main() {
         float,
         float.x,
         float.y
+    );
+    log::debug!(
+        "A mixed Point {:?} with x being {} and y being {}",
+        mixed,
+        mixed.x,
+        mixed.y
     );
 }

@@ -23,6 +23,27 @@ impl Point<f32, f32> {
     }
 }
 
+struct MixPoint<X1, Y1> {
+    x: X1,
+    y: Y1,
+}
+
+// Note: The purpose of this example is to demonstrate a situation in which
+// some generic parameters are declared with impl
+// and some are declared with the method definition.
+// Here, the generic parameters X1 and Y1 are declared after impl
+// because they go with the struct definition.
+// The generic parameters X2 and Y2 are declared after fn mixup
+// because they’re only relevant to the method.
+impl<X1, Y1> MixPoint<X1, Y1> {
+    fn mixup<X2, Y2>(self, other: MixPoint<X2, Y2>) -> Point<X1, Y2> {
+        Point {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     let mut largest = &list[0];
 
@@ -108,4 +129,11 @@ fn main() {
         float,
         float.distance_from_origin()
     );
+
+    log::info!("Mixing Generic Types on Methods and Strucs definition");
+
+    let p1 = MixPoint { x: 5, y: 10.4 };
+    let p2 = MixPoint { x: "Hello", y: 'c' };
+    let p3 = p1.mixup(p2);
+    log::info!("p3.x = {}, p3.y = {}", p3.x, p3.y);
 }

@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 pub trait Summary {
     fn summarize_author(&self) -> String;
 
@@ -48,4 +50,19 @@ pub fn mixed_feed(item1: &impl Summary, item2: &impl Summary) {
 // Using the Trait bound syntax, both parameters have to be of the same Type
 pub fn feed<T: Summary>(item1: &T, item2: &T) {
     log::info!("\n> {} \n> {}", item1.summarize(), item2.summarize());
+}
+
+// Using more than one Trait as parameter
+pub fn with_more_traits_as_parameter(item: &(impl Summary + Display)) {
+    log::debug!("{} {}", item.summarize(), item);
+}
+
+// Using more than one Trait as bound
+pub fn with_more_traits_as_bound<T: Summary + PartialOrd>(item1: &T, item2: &T) {
+    log::debug!(
+        "{} >= {} ? {}",
+        item1.summarize(),
+        item2.summarize(),
+        item1 >= item2
+    );
 }

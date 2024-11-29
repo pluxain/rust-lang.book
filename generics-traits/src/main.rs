@@ -1,4 +1,4 @@
-use aggregator::{Summary, Tweet};
+use aggregator::{NewsArticle, Summary, Tweet};
 use log;
 use log4rs;
 
@@ -150,5 +150,17 @@ fn main() {
         reply: false,
         retweet: false,
     };
-    log::info!("1 new tweet: {}", tweet.summarize())
+    log::info!("1 new tweet: {}", tweet.summarize());
+
+    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best \
+                 hockey team in the NHL.",
+        ),
+    };
+
+    log::info!("New article available! {}", article.summarize());
 }

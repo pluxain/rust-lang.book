@@ -1,5 +1,8 @@
+use aggregator::{Summary, Tweet};
 use log;
 use log4rs;
+
+pub mod aggregator;
 
 #[derive(Debug)]
 struct Point<T, U> {
@@ -139,4 +142,13 @@ fn main() {
 
     log::info!("Traits: Defining shared Behavior");
     log::info!("Defining a Trait");
+    log::info!("Implementing a Trait on a Type");
+
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("Of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    };
+    log::info!("1 new tweet: {}", tweet.summarize())
 }

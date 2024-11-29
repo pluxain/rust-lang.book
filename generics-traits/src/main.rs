@@ -136,4 +136,7 @@ fn main() {
     let p2 = MixPoint { x: "Hello", y: 'c' };
     let p3 = p1.mixup(p2);
     log::info!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+
+    log::info!("Traits: Defining shared Behavior");
+    log::info!("Defining a Trait");
 }

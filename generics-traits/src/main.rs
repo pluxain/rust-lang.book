@@ -1,4 +1,4 @@
-use aggregator::{NewsArticle, Summary, Tweet};
+use aggregator::{notify, NewsArticle, Summary, Tweet};
 use log;
 use log4rs;
 
@@ -163,4 +163,8 @@ fn main() {
     };
 
     log::info!("New article available! {}", article.summarize());
+
+    log::info!("Trait as Parameters type");
+    notify(&tweet);
+    notify(&article);
 }

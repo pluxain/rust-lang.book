@@ -35,3 +35,7 @@ impl Summary for Tweet {
         format!("{}: {}", self.username, self.content)
     }
 }
+
+pub fn notify(item: &impl Summary) {
+    log::info!("Breaking news! {}", item.summarize());
+}

@@ -1,4 +1,4 @@
-use aggregator::{notify, NewsArticle, Summary, Tweet};
+use aggregator::{feed, mixed_feed, notify, NewsArticle, Summary, Tweet};
 use log;
 use log4rs;
 
@@ -167,4 +167,19 @@ fn main() {
     log::info!("Trait as Parameters type");
     notify(&tweet);
     notify(&article);
+    mixed_feed(&tweet, &article);
+
+    log::info!("Trait bound syntax");
+
+    // feed(&tweet, &article); // Note: won't work as with Trait bound syntax both parameter need to be of the same type and not only implement the Trait
+    // Note: with Trait bound both parameter need to be of the same type, not only implement the Trait specified in the Bound
+    feed(
+        &tweet,
+        &Tweet {
+            content: String::from("This is the last Tweet I will write"),
+            username: String::from("John Doe"),
+            reply: false,
+            retweet: false,
+        },
+    );
 }

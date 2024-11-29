@@ -39,3 +39,13 @@ impl Summary for Tweet {
 pub fn notify(item: &impl Summary) {
     log::info!("Breaking news! {}", item.summarize());
 }
+
+// Using the Trait as parameter enables both parameter to only implement the Trait but not to be of the same Type
+pub fn mixed_feed(item1: &impl Summary, item2: &impl Summary) {
+    log::info!("\n> {} \n> {}", item1.summarize(), item2.summarize());
+}
+
+// Using the Trait bound syntax, both parameters have to be of the same Type
+pub fn feed<T: Summary>(item1: &T, item2: &T) {
+    log::info!("\n> {} \n> {}", item1.summarize(), item2.summarize());
+}

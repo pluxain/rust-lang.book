@@ -141,9 +141,3 @@ impl<T: Display + PartialOrd> Pair<T> {
         }
     }
 }
-
-impl<T: Summary> ToString for T {
-    fn to_string(&self) -> String {
-        self.summarize()
-    }
-}

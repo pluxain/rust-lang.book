@@ -112,3 +112,38 @@ pub fn returns_summarizable() -> impl Summary {
 //         }
 //     }
 // }
+
+pub struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    pub fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+
+    pub fn x(&self) -> &T {
+        &self.x
+    }
+
+    pub fn y(&self) -> &T {
+        &self.y
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    pub fn cmp_display(&self) {
+        if self.x >= self.y {
+            log::info!("The largest member is x = {}", self.x);
+        } else {
+            log::info!("The largest member is y = {}", self.y);
+        }
+    }
+}
+
+impl<T: Summary> ToString for T {
+    fn to_string(&self) -> String {
+        self.summarize()
+    }
+}

@@ -1,4 +1,6 @@
-use aggregator::{feed, mixed_feed, notify, returns_summarizable, NewsArticle, Summary, Tweet};
+use aggregator::{
+    feed, mixed_feed, notify, returns_summarizable, NewsArticle, Pair, Summary, Tweet,
+};
 use log;
 use log4rs;
 
@@ -185,4 +187,14 @@ fn main() {
 
     log::info!("Returning Types That Implement Traits");
     notify(&returns_summarizable());
+
+    log::info!("Using Trait Bounds to Conditionally Implement Methods");
+
+    let pair = Pair::new(3, 4);
+    log::info!("pair x is {} and y is {}", pair.x(), pair.y());
+    pair.cmp_display();
+    let other_pair = Pair::new("foo", "bar");
+    other_pair.cmp_display();
+    let _wrong_pair = Pair::new(vec![1, 2, 3], vec![4, 5, 6]);
+    // wrong_pair.cmp_display(); // Note: work as the Trait bound is not respected
 }

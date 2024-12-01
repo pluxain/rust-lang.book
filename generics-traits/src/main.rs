@@ -4,6 +4,7 @@ use aggregator::{
 };
 use log;
 use log4rs;
+use std::fmt::Display;
 
 pub mod aggregator;
 
@@ -66,6 +67,18 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
 // -> fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
 // here the compiler does not know what will be the output lifetime so it triggers an error
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    log::info!("Announcement! {ann}");
     if x.len() > y.len() {
         x
     } else {
@@ -273,6 +286,12 @@ fn main() {
 
     log::info!("The Static Lifetime");
     let _s: &'static str = "I have a static lifetime.";
+
+    log::info!("Summary");
+    log::info!(
+        "{}",
+        longest_with_an_announcement("longest", "long", "Oye! Oye")
+    );
 }
 
 #[cfg(test)]

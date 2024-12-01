@@ -60,6 +60,14 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     largest
 }
 
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
     log::info!("Generics and Traits");
@@ -197,4 +205,50 @@ fn main() {
     other_pair.cmp_display();
     let _wrong_pair = Pair::new(vec![1, 2, 3], vec![4, 5, 6]);
     // wrong_pair.cmp_display(); // Note: work as the Trait bound is not respected
+
+    log::info!("Validating References with Lifetimes");
+
+    log::info!("Preventing Dangling References with Lifetimes");
+    // Note: dangling reference, won't compile
+    //     let r;
+    //     {
+    //         let x = 5;
+    //         r = &x;
+    //     }
+    //     log::info!("r: {}", r);
+    // Note: no dangling refenrence -> compiles
+    let x = 5;
+    let r = &x;
+    log::info!("r: {}", r);
+
+    log::info!("Generic Lifetimes in Functions");
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    log::info!("The longest string is {result}");
+
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+        log::info!("The longest string is {result}");
+    }
+    // log::info!("The longest string is {result}"); // Note: won't work as the lifetime or resultt is constrained by the lifetime of string2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::longest;
+
+    #[test]
+    fn x_is_longer() {
+        assert_eq!(longest("longer", "long"), "longer");
+    }
+
+    #[test]
+    fn y_is_longer() {
+        assert_eq!(longest("long", "longer"), "longer");
+    }
 }

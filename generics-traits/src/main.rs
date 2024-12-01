@@ -270,6 +270,9 @@ fn main() {
         "{}",
         important_excerpt.announce_and_return_part("Oye! Oye!")
     );
+
+    log::info!("The Static Lifetime");
+    let _s: &'static str = "I have a static lifetime.";
 }
 
 #[cfg(test)]

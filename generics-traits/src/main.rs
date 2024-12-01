@@ -262,6 +262,14 @@ fn main() {
     for ex in exs {
         log::info!("The first word of '{}' is '{}'", ex, first_word(&ex));
     }
+
+    log::info!("Lifetime Annotations in Method Definitions");
+    let important_excerpt = ImportantExcerpt { part: "part one" };
+    log::info!("level is {}", important_excerpt.level());
+    log::info!(
+        "{}",
+        important_excerpt.announce_and_return_part("Oye! Oye!")
+    );
 }
 
 #[cfg(test)]

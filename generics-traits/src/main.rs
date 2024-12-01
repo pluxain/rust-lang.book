@@ -1,5 +1,10 @@
+use aggregator::{
+    feed, mixed_feed, notify, returns_summarizable, NewsArticle, Pair, Summary, Tweet,
+};
 use log;
 use log4rs;
+
+pub mod aggregator;
 
 #[derive(Debug)]
 struct Point<T, U> {
@@ -136,4 +141,60 @@ fn main() {
     let p2 = MixPoint { x: "Hello", y: 'c' };
     let p3 = p1.mixup(p2);
     log::info!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+
+    log::info!("Traits: Defining shared Behavior");
+    log::info!("Defining a Trait");
+    log::info!("Implementing a Trait on a Type");
+
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("Of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    };
+    log::info!("1 new tweet: {}", tweet.summarize());
+
+    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best \
+                 hockey team in the NHL.",
+        ),
+    };
+
+    log::info!("New article available! {}", article.summarize());
+
+    log::info!("Trait as Parameters type");
+    notify(&tweet);
+    notify(&article);
+    mixed_feed(&tweet, &article);
+
+    log::info!("Trait bound syntax");
+
+    // feed(&tweet, &article); // Note: won't work as with Trait bound syntax both parameter need to be of the same type and not only implement the Trait
+    // Note: with Trait bound both parameter need to be of the same type, not only implement the Trait specified in the Bound
+    feed(
+        &tweet,
+        &Tweet {
+            content: String::from("This is the last Tweet I will write"),
+            username: String::from("John Doe"),
+            reply: false,
+            retweet: false,
+        },
+    );
+
+    log::info!("Returning Types That Implement Traits");
+    notify(&returns_summarizable());
+
+    log::info!("Using Trait Bounds to Conditionally Implement Methods");
+
+    let pair = Pair::new(3, 4);
+    log::info!("pair x is {} and y is {}", pair.x(), pair.y());
+    pair.cmp_display();
+    let other_pair = Pair::new("foo", "bar");
+    other_pair.cmp_display();
+    let _wrong_pair = Pair::new(vec![1, 2, 3], vec![4, 5, 6]);
+    // wrong_pair.cmp_display(); // Note: work as the Trait bound is not respected
 }

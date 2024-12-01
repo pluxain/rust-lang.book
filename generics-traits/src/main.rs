@@ -1,4 +1,4 @@
-use aggregator::{feed, mixed_feed, notify, NewsArticle, Summary, Tweet};
+use aggregator::{feed, mixed_feed, notify, returns_summarizable, NewsArticle, Summary, Tweet};
 use log;
 use log4rs;
 
@@ -182,4 +182,7 @@ fn main() {
             retweet: false,
         },
     );
+
+    log::info!("Returning Types That Implement Traits");
+    notify(&returns_summarizable());
 }

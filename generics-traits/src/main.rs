@@ -1,8 +1,10 @@
 use aggregator::{
-    feed, mixed_feed, notify, returns_summarizable, NewsArticle, Pair, Summary, Tweet,
+    feed, first_word, mixed_feed, notify, returns_summarizable, ImportantExcerpt, NewsArticle,
+    Pair, Summary, Tweet,
 };
 use log;
 use log4rs;
+use std::fmt::Display;
 
 pub mod aggregator;
 
@@ -58,6 +60,30 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
         }
     }
     largest
+}
+
+// Note: here the lifetime elision cannot apply, because the compile cannot guess the input lifetimes and the output lifetimes:
+// fn longest(x: &str, y: &str) -> &str {
+// -> fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
+// here the compiler does not know what will be the output lifetime so it triggers an error
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    log::info!("Announcement! {ann}");
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
 
 fn main() {
@@ -197,4 +223,88 @@ fn main() {
     other_pair.cmp_display();
     let _wrong_pair = Pair::new(vec![1, 2, 3], vec![4, 5, 6]);
     // wrong_pair.cmp_display(); // Note: work as the Trait bound is not respected
+
+    log::info!("Validating References with Lifetimes");
+
+    log::info!("Preventing Dangling References with Lifetimes");
+    // Note: dangling reference, won't compile
+    //     let r;
+    //     {
+    //         let x = 5;
+    //         r = &x;
+    //     }
+    //     log::info!("r: {}", r);
+    // Note: no dangling refenrence -> compiles
+    let x = 5;
+    let r = &x;
+    log::info!("r: {}", r);
+
+    log::info!("Generic Lifetimes in Functions");
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    log::info!("The longest string is {result}");
+
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+        log::info!("The longest string is {result}");
+    }
+    // log::info!("The longest string is {result}"); // Note: won't work as the lifetime or resultt is constrained by the lifetime of string2
+
+    log::info!("Lifetime Annotations in Struct Definitions");
+    let novel = "Call me Ishmael. Some years ago...".to_string();
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+
+    log::info!("Important excerpt: {}", i.part);
+
+    log::info!("Lifetime Elision");
+    let exs = vec![
+        "One",
+        "One word",
+        "Word for one",
+        "One for all",
+        "All for one",
+    ];
+    for ex in exs {
+        log::info!("The first word of '{}' is '{}'", ex, first_word(&ex));
+    }
+
+    log::info!("Lifetime Annotations in Method Definitions");
+    let important_excerpt = ImportantExcerpt { part: "part one" };
+    log::info!("level is {}", important_excerpt.level());
+    log::info!(
+        "{}",
+        important_excerpt.announce_and_return_part("Oye! Oye!")
+    );
+
+    log::info!("The Static Lifetime");
+    let _s: &'static str = "I have a static lifetime.";
+
+    log::info!("Summary");
+    log::info!(
+        "{}",
+        longest_with_an_announcement("longest", "long", "Oye! Oye")
+    );
+}
+
+#[cfg(test)]
+mod tests {
+    use super::longest;
+
+    #[test]
+    fn x_is_longer() {
+        assert_eq!(longest("longer", "long"), "longer");
+    }
+
+    #[test]
+    fn y_is_longer() {
+        assert_eq!(longest("long", "longer"), "longer");
+    }
 }

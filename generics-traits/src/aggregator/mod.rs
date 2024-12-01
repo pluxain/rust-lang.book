@@ -142,8 +142,39 @@ impl<T: Display + PartialOrd> Pair<T> {
     }
 }
 
-impl<T: Summary> ToString for T {
-    fn to_string(&self) -> String {
-        self.summarize()
+pub struct ImportantExcerpt<'a> {
+    pub part: &'a str,
+}
+
+impl<'a> ImportantExcerpt<'a> {
+    // Note: lifetime annotation is not required here due to elision rule (1).
+    // pub fn level(&self) -> i32 {
+    // -> pub fn level<'a>(&'a self) -> i32 {
+    pub fn level(&self) -> i32 {
+        3
     }
+    // Note: lifetime annotation is not required due to elision rule (3).
+    // pub fn announce_and_return_part(&self, announcement: &str) -> &str {
+    // -> pub fn announce_and_return_part<'a, b'>(&'a self, announcement: &'b str) -> &str {
+    // -> pub fn announce_and_return_part<'a, b'>(&'a self, announcement: &'b str) -> &'a str {
+    pub fn announce_and_return_part(&self, announcement: &str) -> &str {
+        log::info!("Attention please: {announcement}");
+        self.part
+    }
+}
+
+// Note: this function uses the lifetime elision rules, so no lifetime annotation are required
+// the compiler can guess the input lifetime and input lifetime itself applying
+// the three rules
+// pub fn first_word(s: &str) -> &str {
+// ->  pub fn first_word<'a>(s: &'a str) -> &str {
+// ->  pub fn first_word<'a>(s: &'a str) -> &'a str {
+pub fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
 }

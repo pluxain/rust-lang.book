@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::fmt::{Debug, Display};
 
 pub trait Summary {
     fn summarize_author(&self) -> String;
@@ -65,4 +65,19 @@ pub fn with_more_traits_as_bound<T: Summary + PartialOrd>(item1: &T, item2: &T) 
         item2.summarize(),
         item1 >= item2
     );
+}
+
+pub fn some_function_with_obscure_types<T: Display + Clone, U: Clone + Debug>(
+    _t: &T,
+    _u: &U,
+) -> i32 {
+    0
+}
+
+pub fn some_function_using_where_to_increase_readability<T, U>(_t: &T, _u: &U) -> i32
+where
+    T: Display + Clone,
+    U: Clone + Debug,
+{
+    0
 }

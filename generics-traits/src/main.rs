@@ -1,5 +1,6 @@
 use aggregator::{
-    feed, mixed_feed, notify, returns_summarizable, NewsArticle, Pair, Summary, Tweet,
+    feed, mixed_feed, notify, returns_summarizable, ImportantExcerpt, NewsArticle, Pair, Summary,
+    Tweet,
 };
 use log;
 use log4rs;
@@ -236,6 +237,15 @@ fn main() {
         log::info!("The longest string is {result}");
     }
     // log::info!("The longest string is {result}"); // Note: won't work as the lifetime or resultt is constrained by the lifetime of string2
+
+    log::info!("Lifetime Annotations in Struct Definitions");
+    let novel = "Call me Ishmael. Some years ago...".to_string();
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+
+    log::info!("Important excerpt: {}", i.part);
 }
 
 #[cfg(test)]

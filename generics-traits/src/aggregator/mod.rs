@@ -141,3 +141,7 @@ impl<T: Display + PartialOrd> Pair<T> {
         }
     }
 }
+
+pub struct ImportantExcerpt<'a> {
+    pub part: &'a str,
+}

@@ -145,3 +145,19 @@ impl<T: Display + PartialOrd> Pair<T> {
 pub struct ImportantExcerpt<'a> {
     pub part: &'a str,
 }
+
+// Note: this function uses the lifetime elision rules, so no lifetime annotation are required
+// the compiler can guess the input lifetime and input lifetime itself applying
+// the three rules
+// pub fn first_word(s: &str) -> &str {
+// ->  pub fn first_word<'a>(s: &'a str) -> &str {
+// ->  pub fn first_word<'a>(s: &'a str) -> &'a str {
+pub fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
+}

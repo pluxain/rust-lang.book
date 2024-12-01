@@ -1,6 +1,6 @@
 use aggregator::{
-    feed, mixed_feed, notify, returns_summarizable, ImportantExcerpt, NewsArticle, Pair, Summary,
-    Tweet,
+    feed, first_word, mixed_feed, notify, returns_summarizable, ImportantExcerpt, NewsArticle,
+    Pair, Summary, Tweet,
 };
 use log;
 use log4rs;
@@ -61,6 +61,10 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     largest
 }
 
+// Note: here the lifetime elision cannot apply, because the compile cannot guess the input lifetimes and the output lifetimes:
+// fn longest(x: &str, y: &str) -> &str {
+// -> fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
+// here the compiler does not know what will be the output lifetime so it triggers an error
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
         x
@@ -246,6 +250,18 @@ fn main() {
     };
 
     log::info!("Important excerpt: {}", i.part);
+
+    log::info!("Lifetime Elision");
+    let exs = vec![
+        "One",
+        "One word",
+        "Word for one",
+        "One for all",
+        "All for one",
+    ];
+    for ex in exs {
+        log::info!("The first word of '{}' is '{}'", ex, first_word(&ex));
+    }
 }
 
 #[cfg(test)]

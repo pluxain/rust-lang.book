@@ -15,9 +15,10 @@ enum Command {
 struct Action {
     command: Command,
     name: String,
+    department: String,
 }
 
-fn prompt(p: &str) -> Result<String, io::Error> {
+fn prompt(p: String) -> Result<String, io::Error> {
     log::info!("Prompting");
     let mut input = String::new();
     println!("{p}");
@@ -29,8 +30,8 @@ fn prompt(p: &str) -> Result<String, io::Error> {
 
 fn parse<'a>(input: String) -> Result<Action, String> {
     let parts: Vec<&str> = input.split_whitespace().collect();
-    if parts.len() < 2 {
-        return Err("Please provide a valid instruction!".to_string());
+    if parts.len() < 4 {
+        return Err("Please provide a valid action!".to_string());
     }
     let command = match parts.get(0).unwrap().to_lowercase() {
         _c if _c == String::from("add") => Command::Add,
@@ -44,7 +45,12 @@ fn parse<'a>(input: String) -> Result<Action, String> {
         }
     };
     let name = parts.get(1).unwrap().to_string();
-    Ok(Action { command, name })
+    let department = parts.get(3).unwrap().to_string();
+    Ok(Action {
+        command,
+        department,
+        name,
+    })
 }
 
 fn main() {
@@ -52,14 +58,20 @@ fn main() {
     log::info!("challenge: company");
 
     loop {
-        let input = prompt(
-            "What do you want to do (ex: `Add Robert to DevOps`, `Remove Wendy from Pirates`)",
-        )
+        let input = prompt(format!(
+            "What do you want to do (ex: `{:?} Robert to DevOps` or `{:?} Wendy from Pirates`)",
+            Command::Add,
+            Command::Remove
+        ))
         .unwrap();
         log::info!("input is `{input}`");
 
         let result = parse(input);
-        let Action { command, name } = match result {
+        let Action {
+            command,
+            department,
+            name,
+        } = match result {
             Ok(action) => action,
             Err(error) => {
                 println!("{error}");
@@ -68,6 +80,7 @@ fn main() {
         };
         log::info!("command is `{command:?}`");
         log::info!("name is `{name}`");
+        log::info!("department is `{department}`");
         break;
     }
 }
@@ -115,8 +128,32 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Please provide a valid instruction!")]
-    fn parse_command_too_few_words() {
+    #[should_panic(expected = "Please provide a valid action!")]
+    fn parse_action_too_few_words_one() {
         parse("wrong".to_string()).unwrap();
+    }
+
+    #[test]
+    #[should_panic(expected = "Please provide a valid action!")]
+    fn parse_action_too_few_words_two() {
+        parse("wrong command".to_string()).unwrap();
+    }
+
+    #[test]
+    #[should_panic(expected = "Please provide a valid action!")]
+    fn parse_action_too_few_words_three() {
+        parse("wrong command indeed".to_string()).unwrap();
+    }
+
+    #[test]
+    fn parse_action_name() {
+        let Action { name, .. } = parse("Add Wendy to Pirates".to_string()).unwrap();
+        assert_eq!(name, "Wendy");
+    }
+
+    #[test]
+    fn parse_action_department() {
+        let Action { department, .. } = parse("Add Wendy to Pirates".to_string()).unwrap();
+        assert_eq!(department, "Pirates");
     }
 }

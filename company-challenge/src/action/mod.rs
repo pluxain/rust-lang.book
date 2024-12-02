@@ -1,3 +1,5 @@
+use crate::company::{Department, Employee};
+
 #[derive(Debug)]
 pub enum Command {
     Add,
@@ -6,8 +8,8 @@ pub enum Command {
 
 pub struct Action {
     pub command: Command,
-    pub name: String,
-    pub department: String,
+    pub employee: Employee,
+    pub department: Department,
 }
 
 pub fn parse<'a>(input: String) -> Result<Action, String> {
@@ -26,12 +28,12 @@ pub fn parse<'a>(input: String) -> Result<Action, String> {
             ))
         }
     };
-    let name = parts.get(1).unwrap().to_string();
+    let employee = parts.get(1).unwrap().to_string();
     let department = parts.get(3).unwrap().to_string();
     Ok(Action {
         command,
         department,
-        name,
+        employee,
     })
 }
 
@@ -96,9 +98,9 @@ mod tests {
     }
 
     #[test]
-    fn parse_action_name() {
-        let Action { name, .. } = parse("Add Wendy to Pirates".to_string()).unwrap();
-        assert_eq!(name, "Wendy");
+    fn parse_action_employee() {
+        let Action { employee, .. } = parse("Add Wendy to Pirates".to_string()).unwrap();
+        assert_eq!(employee, "Wendy");
     }
 
     #[test]

@@ -30,7 +30,7 @@ fn main() {
         let Action {
             command,
             department,
-            name,
+            employee,
         } = match result {
             Ok(action) => action,
             Err(error) => {
@@ -39,11 +39,11 @@ fn main() {
             }
         };
         log::info!("command is `{command:?}`");
-        log::info!("name is `{name}`");
+        log::info!("employee is `{employee}`");
         log::info!("department is `{department}`");
         // TODO: Command::remove
         match command {
-            Command::Add => add_to(&mut company, department, name),
+            Command::Add => add_to(&mut company, department, employee),
             Command::Remove => todo!(),
         }
         log::debug!("{:?}", company);

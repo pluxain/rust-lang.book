@@ -1,14 +1,16 @@
 use std::collections::HashMap;
 
 pub type Company = HashMap<String, Vec<String>>;
+pub type Employee = String;
+pub type Department = String;
 
-pub fn add_to(company: &mut Company, department: String, name: String) {
+pub fn add_to(company: &mut Company, department: Department, employee: Employee) {
     let d = company.entry(department.clone()).or_insert(vec![]);
-    if !d.contains(&name) {
-        d.push(name.clone());
-        log::info!("Added {} to {}, {:?}", name, department, d);
+    if !d.contains(&employee) {
+        d.push(employee.clone());
+        log::info!("Added {} to {}, {:?}", employee, department, d);
     } else {
-        log::warn!("{} is already in {}, {:?}", name, department, d);
+        log::warn!("{} is already in {}, {:?}", employee, department, d);
     }
 }
 
@@ -17,7 +19,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn add_name_and_department_to_empty_company() {
+    fn add_employee_and_department_to_empty_company() {
         let expected = Company::from([(String::from("Avengers"), vec![String::from("Thor")])]);
         let mut company = Company::new();
         add_to(&mut company, String::from("Avengers"), String::from("Thor"));
@@ -25,7 +27,7 @@ mod tests {
     }
 
     #[test]
-    fn add_name_to_department_to_non_empty_company() {
+    fn add_employee_to_department_to_non_empty_company() {
         let expected = Company::from([
             (String::from("Avengers"), vec![String::from("Thor")]),
             (String::from("X-Men"), vec![String::from("Professor X")]),
@@ -37,7 +39,7 @@ mod tests {
     }
 
     #[test]
-    fn add_name_to_existing_department() {
+    fn add_employee_to_existing_department() {
         let expected = Company::from([(
             String::from("Avengers"),
             vec![String::from("Thor"), String::from("Iron Man")],
@@ -52,7 +54,7 @@ mod tests {
     }
 
     #[test]
-    fn add_name_once_to_department() {
+    fn add_employee_once_to_department() {
         let expected = Company::from([(String::from("Avengers"), vec![String::from("Thor")])]);
         let mut company = Company::from([(String::from("Avengers"), vec![String::from("Thor")])]);
         add_to(&mut company, String::from("Avengers"), String::from("Thor"));

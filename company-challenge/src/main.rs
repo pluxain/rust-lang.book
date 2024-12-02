@@ -13,7 +13,7 @@ enum Command {
 }
 
 struct Action {
-    command: Option<Command>,
+    command: Command,
     name: String,
 }
 
@@ -27,15 +27,24 @@ fn prompt(p: &str) -> Result<String, io::Error> {
     }
 }
 
-fn parse(input: String) -> Action {
+fn parse<'a>(input: String) -> Result<Action, String> {
     let parts: Vec<&str> = input.split_whitespace().collect();
+    if parts.len() < 2 {
+        return Err("Please provide a valid instruction!".to_string());
+    }
     let command = match parts.get(0).unwrap().to_lowercase() {
-        _c if _c == String::from("add") => Some(Command::Add),
-        _c if _c == String::from("remove") => Some(Command::Remove),
-        _ => None,
+        _c if _c == String::from("add") => Command::Add,
+        _c if _c == String::from("remove") => Command::Remove,
+        _ => {
+            return Err(format!(
+                "Please use a valid command `{:?}` or `{:?}`",
+                Command::Add,
+                Command::Remove
+            ))
+        }
     };
     let name = parts.get(1).unwrap().to_string();
-    Action { command, name }
+    Ok(Action { command, name })
 }
 
 fn main() {
@@ -49,17 +58,16 @@ fn main() {
         .unwrap();
         log::info!("input is `{input}`");
 
-        let Action { command, name } = parse(input);
+        let result = parse(input);
+        let Action { command, name } = match result {
+            Ok(action) => action,
+            Err(error) => {
+                println!("{error}");
+                continue;
+            }
+        };
         log::info!("command is `{command:?}`");
         log::info!("name is `{name}`");
-        if let None = command {
-            println!(
-                "Please use a valid command `{:?}` or `{:?}`",
-                Command::Add,
-                Command::Remove
-            );
-            continue;
-        }
         break;
     }
 }
@@ -70,31 +78,45 @@ mod tests {
 
     #[test]
     fn parse_add_command() {
-        let Action { command, .. } = parse(String::from("Add Wendy to Pirates"));
-        assert!(matches!(command, Some(Command::Add)));
-        let Action { command, .. } = parse(String::from("add Wendy to Pirates"));
-        assert!(matches!(command, Some(Command::Add)));
-        let Action { command, .. } = parse(String::from("ADD Wendy to Pirates"));
-        assert!(matches!(command, Some(Command::Add)));
+        let Action { command, .. } = parse(String::from("Add Wendy to Pirates")).unwrap();
+        assert!(matches!(command, Command::Add));
+        let Action { command, .. } = parse(String::from("add Wendy to Pirates")).unwrap();
+        assert!(matches!(command, Command::Add));
+        let Action { command, .. } = parse(String::from("ADD Wendy to Pirates")).unwrap();
+        assert!(matches!(command, Command::Add));
     }
 
     #[test]
     fn parse_remove_command() {
-        let Action { command, .. } = parse(String::from("Remove Wendy from Pirates"));
-        assert!(matches!(command, Some(Command::Remove)));
-        let Action { command, .. } = parse(String::from("remove Wendy from Pirates"));
-        assert!(matches!(command, Some(Command::Remove)));
-        let Action { command, .. } = parse(String::from("REMOVE Wendy from Pirates"));
-        assert!(matches!(command, Some(Command::Remove)));
+        let Action { command, .. } = parse(String::from("Remove Wendy from Pirates")).unwrap();
+        assert!(matches!(command, Command::Remove));
+        let Action { command, .. } = parse(String::from("remove Wendy from Pirates")).unwrap();
+        assert!(matches!(command, Command::Remove));
+        let Action { command, .. } = parse(String::from("REMOVE Wendy from Pirates")).unwrap();
+        assert!(matches!(command, Command::Remove));
     }
 
     #[test]
-    fn parse_command_as_none() {
-        let Action { command, .. } = parse(String::from("Move Wendy into Pirates"));
-        assert!(matches!(command, None));
-        let Action { command, .. } = parse(String::from("Affect Wendy to Pirates"));
-        assert!(matches!(command, None));
-        let Action { command, .. } = parse(String::from("Fire Wendy from Pirates"));
-        assert!(matches!(command, None));
+    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    fn parse_command_unknown_move() {
+        parse(String::from("Move Wendy into Pirates")).unwrap();
+    }
+
+    #[test]
+    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    fn parse_command_unknown_affect() {
+        parse(String::from("Affect Wendy to Pirates")).unwrap();
+    }
+
+    #[test]
+    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    fn parse_command_unknown_fire() {
+        parse(String::from("Fire Wendy from Pirates")).unwrap();
+    }
+
+    #[test]
+    #[should_panic(expected = "Please provide a valid instruction!")]
+    fn parse_command_too_few_words() {
+        parse("wrong".to_string()).unwrap();
     }
 }

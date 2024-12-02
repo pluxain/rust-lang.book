@@ -4,13 +4,15 @@ pub type Company = HashMap<String, Vec<String>>;
 pub type Employee = String;
 pub type Department = String;
 
+// TODO: sort the department alphabetically
 pub fn add_to(company: &mut Company, department: Department, employee: Employee) {
     let d = company.entry(department.clone()).or_insert(vec![]);
     if !d.contains(&employee) {
-        d.push(employee.clone());
-        log::info!("Added {} to {}, {:?}", employee, department, d);
+        let msg = format!("Added `{}` to `{}`, {:?}", employee, department, d);
+        d.push(employee);
+        log::info!("{msg}");
     } else {
-        log::warn!("{} is already in {}, {:?}", employee, department, d);
+        log::warn!("`{}` is already in `{}`, {:?}", employee, department, d);
     }
 }
 

@@ -4,7 +4,7 @@
 
 use crate::action::{parse, Action, Command};
 use crate::prompt::prompt;
-use company::{add_to, Company};
+use company::{add_to, remove_from, Company};
 use log;
 use log4rs;
 
@@ -41,10 +41,10 @@ fn main() {
         log::info!("command is `{command:?}`");
         log::info!("employee is `{employee}`");
         log::info!("department is `{department}`");
-        // TODO: Command::remove
+
         match command {
             Command::Add => add_to(&mut company, department, employee),
-            Command::Remove => todo!(),
+            Command::Remove => remove_from(&mut company, department, employee),
         }
         log::debug!("{:?}", company);
         continue;

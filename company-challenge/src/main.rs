@@ -19,9 +19,10 @@ fn main() {
 
     loop {
         let input = prompt(format!(
-            "What do you want to do (ex: `{:?} Robert to DevOps` or `{:?} Wendy from Pirates`), Ctrl + C to exit the programm",
+            "What do you want to do (ex: `{:?} Robert to DevOps`, `{:?} Wendy from Pirates` or `{:?} Avengers`), Ctrl + C to exit the programm",
             Command::Add,
-            Command::Remove
+            Command::Remove,
+            Command::List
         ))
         .unwrap();
         log::info!("input is `{input}`");
@@ -39,13 +40,16 @@ fn main() {
             }
         };
         log::info!("command is `{command:?}`");
-        log::info!("employee is `{employee}`");
         log::info!("department is `{department}`");
+        log::info!(
+            "employee is `{}`",
+            employee.clone().unwrap_or(String::from("None"))
+        );
 
         match command {
-            Command::Add => add_to(&mut company, department, employee),
-            Command::Remove => remove_from(&mut company, department, employee),
-            _ => todo!(),
+            Command::Add => add_to(&mut company, department, employee.unwrap()),
+            Command::Remove => remove_from(&mut company, department, employee.unwrap()),
+            Command::List => todo!(),
         }
         log::debug!("{:?}", company);
         continue;

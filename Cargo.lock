@@ -84,6 +84,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "company-challenge"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "log4rs",
+]
+
+[[package]]
 name = "converter"
 version = "0.1.0"
 

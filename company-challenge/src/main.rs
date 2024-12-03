@@ -45,6 +45,7 @@ fn main() {
         match command {
             Command::Add => add_to(&mut company, department, employee),
             Command::Remove => remove_from(&mut company, department, employee),
+            _ => todo!(),
         }
         log::debug!("{:?}", company);
         continue;

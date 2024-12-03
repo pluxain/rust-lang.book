@@ -3,6 +3,7 @@ use crate::company::{Department, Employee};
 #[derive(Debug)]
 pub enum Command {
     Add,
+    List,
     Remove,
 }
 
@@ -20,11 +21,13 @@ pub fn parse<'a>(input: String) -> Result<Action, String> {
     let command = match parts.get(0).unwrap().to_lowercase() {
         _c if _c == String::from("add") => Command::Add,
         _c if _c == String::from("remove") => Command::Remove,
+        _c if _c == String::from("list") => Command::List,
         _ => {
             return Err(format!(
-                "Please use a valid command `{:?}` or `{:?}`",
+                "Please use a valid command `{:?}`, `{:?}` or `{:?}`",
                 Command::Add,
-                Command::Remove
+                Command::Remove,
+                Command::List
             ))
         }
     };
@@ -62,19 +65,29 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    fn parse_list_command() {
+        let Action { command, .. } = parse(String::from("List something from somewhere")).unwrap();
+        assert!(matches!(command, Command::List));
+        let Action { command, .. } = parse(String::from("list something from somewhere")).unwrap();
+        assert!(matches!(command, Command::List));
+        let Action { command, .. } = parse(String::from("LIST something from somewhere")).unwrap();
+        assert!(matches!(command, Command::List));
+    }
+
+    #[test]
+    #[should_panic(expected = "Please use a valid command `Add`, `Remove` or `List`")]
     fn parse_command_unknown_move() {
         parse(String::from("Move Wendy into Pirates")).unwrap();
     }
 
     #[test]
-    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    #[should_panic(expected = "Please use a valid command `Add`, `Remove` or `List`")]
     fn parse_command_unknown_affect() {
         parse(String::from("Affect Wendy to Pirates")).unwrap();
     }
 
     #[test]
-    #[should_panic(expected = "Please use a valid command `Add` or `Remove`")]
+    #[should_panic(expected = "Please use a valid command `Add`, `Remove` or `List`")]
     fn parse_command_unknown_fire() {
         parse(String::from("Fire Wendy from Pirates")).unwrap();
     }

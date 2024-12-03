@@ -4,7 +4,6 @@ pub type Company = HashMap<String, Vec<String>>;
 pub type Employee = String;
 pub type Department = String;
 
-// TODO: sort the department alphabetically
 pub fn add_to(company: &mut Company, department: Department, employee: Employee) {
     let d = company.entry(department.clone()).or_insert(vec![]);
     if !d.contains(&employee) {
@@ -31,9 +30,24 @@ pub fn remove_from(company: &mut Company, department: Department, employee: Empl
                 department,
                 company
             );
-            ()
         }
     };
+}
+
+pub fn sort_department(company: &mut Company, department: &Department) {
+    let opt = company.get_mut(department);
+    match opt {
+        Some(d) => {
+            d.sort();
+        }
+        None => {
+            log::warn!(
+                "There is no `{}` department int the company, {:?}",
+                department,
+                company
+            );
+        }
+    }
 }
 
 #[cfg(test)]
@@ -149,6 +163,104 @@ mod tests {
             String::from("Avengers"),
             String::from("Wendy"),
         );
+        assert_eq!(company, expected);
+    }
+
+    #[test]
+    fn sort_existing_department() {
+        let expected = HashMap::from([
+            (
+                String::from("Cure"),
+                vec![String::from("Robert"), String::from("Simon")],
+            ),
+            (
+                String::from("Beatles"),
+                vec![
+                    String::from("George"),
+                    String::from("John"),
+                    String::from("Paul"),
+                    String::from("Ringo"),
+                ],
+            ),
+            (
+                String::from("RollingStones"),
+                vec![
+                    String::from("Charlie"),
+                    String::from("Keith"),
+                    String::from("Mick"),
+                ],
+            ),
+        ]);
+
+        let mut company = HashMap::from([
+            (
+                String::from("Cure"),
+                vec![String::from("Robert"), String::from("Simon")],
+            ),
+            (
+                String::from("Beatles"),
+                vec![
+                    String::from("Paul"),
+                    String::from("Ringo"),
+                    String::from("George"),
+                    String::from("John"),
+                ],
+            ),
+            (
+                String::from("RollingStones"),
+                vec![
+                    String::from("Mick"),
+                    String::from("Keith"),
+                    String::from("Charlie"),
+                ],
+            ),
+        ]);
+
+        sort_department(&mut company, &String::from("Cure"));
+        assert_eq!(
+            company.get(&String::from("Cure")).unwrap().to_vec(),
+            vec![String::from("Robert"), String::from("Simon"),]
+        );
+
+        sort_department(&mut company, &String::from("Beatles"));
+        assert_eq!(
+            company.get(&String::from("Beatles")).unwrap().to_vec(),
+            vec![
+                String::from("George"),
+                String::from("John"),
+                String::from("Paul"),
+                String::from("Ringo"),
+            ]
+        );
+
+        sort_department(&mut company, &String::from("RollingStones"));
+        assert_eq!(
+            company
+                .get(&String::from("RollingStones"))
+                .unwrap()
+                .to_vec(),
+            vec![
+                String::from("Charlie"),
+                String::from("Keith"),
+                String::from("Mick"),
+            ]
+        );
+
+        assert_eq!(company, expected);
+    }
+
+    #[test]
+    fn does_not_sort_unknown_department() {
+        let expected = Company::from([(
+            String::from("Beatles"),
+            vec![String::from("Ringo"), String::from("George")],
+        )]);
+        let mut company = Company::from([(
+            String::from("Beatles"),
+            vec![String::from("Ringo"), String::from("George")],
+        )]);
+
+        sort_department(&mut company, &String::from("RollingStones"));
         assert_eq!(company, expected);
     }
 }

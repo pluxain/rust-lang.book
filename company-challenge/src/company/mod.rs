@@ -34,19 +34,40 @@ pub fn remove_from(company: &mut Company, department: Department, employee: Empl
     };
 }
 
-pub fn sort_department(company: &mut Company, department: &Department) {
+// TODO: find a better name
+fn get_department_text(employees: &mut Vec<Employee>, department: &Department) -> String {
+    format!("{} department has: {}", department, employees.join(", "))
+}
+
+pub fn get_department_sorted_text(company: &mut Company, department: &Department) -> String {
     let opt = company.get_mut(department);
     match opt {
         Some(d) => {
             d.sort();
+            get_department_text(d, department)
         }
-        None => {
-            log::warn!(
-                "There is no `{}` department int the company, {:?}",
+        None => format!(
+            "There is no {} department in the company, sorry!",
+            department
+        ),
+    }
+}
+
+pub fn get_company_text(company: &mut Company) -> String {
+    if company.is_empty() {
+        String::from("The company is empty!")
+    } else {
+        let mut department_texts: Vec<String> = vec![String::from("The company is composed of:")];
+        for (department, employees) in company {
+            employees.sort();
+            department_texts.push(format!(
+                "\t{}\n\t\t{}",
                 department,
-                company
-            );
+                get_department_text(employees, department)
+            ));
         }
+
+        department_texts.join("\n")
     }
 }
 
@@ -167,100 +188,54 @@ mod tests {
     }
 
     #[test]
-    fn sort_existing_department() {
-        let expected = HashMap::from([
-            (
-                String::from("Cure"),
-                vec![String::from("Robert"), String::from("Simon")],
-            ),
-            (
-                String::from("Beatles"),
-                vec![
-                    String::from("George"),
-                    String::from("John"),
-                    String::from("Paul"),
-                    String::from("Ringo"),
-                ],
-            ),
-            (
-                String::from("RollingStones"),
-                vec![
-                    String::from("Charlie"),
-                    String::from("Keith"),
-                    String::from("Mick"),
-                ],
-            ),
-        ]);
-
-        let mut company = HashMap::from([
-            (
-                String::from("Cure"),
-                vec![String::from("Robert"), String::from("Simon")],
-            ),
-            (
-                String::from("Beatles"),
-                vec![
-                    String::from("Paul"),
-                    String::from("Ringo"),
-                    String::from("George"),
-                    String::from("John"),
-                ],
-            ),
-            (
-                String::from("RollingStones"),
-                vec![
-                    String::from("Mick"),
-                    String::from("Keith"),
-                    String::from("Charlie"),
-                ],
-            ),
-        ]);
-
-        sort_department(&mut company, &String::from("Cure"));
+    fn get_single_list() {
+        let mut company = Company::from([(String::from("CLanguages"), vec![String::from("C")])]);
         assert_eq!(
-            company.get(&String::from("Cure")).unwrap().to_vec(),
-            vec![String::from("Robert"), String::from("Simon"),]
+            get_department_sorted_text(&mut company, &String::from("CLanguages")),
+            "CLanguages department has: C"
         );
-
-        sort_department(&mut company, &String::from("Beatles"));
-        assert_eq!(
-            company.get(&String::from("Beatles")).unwrap().to_vec(),
-            vec![
-                String::from("George"),
-                String::from("John"),
-                String::from("Paul"),
-                String::from("Ringo"),
-            ]
-        );
-
-        sort_department(&mut company, &String::from("RollingStones"));
-        assert_eq!(
-            company
-                .get(&String::from("RollingStones"))
-                .unwrap()
-                .to_vec(),
-            vec![
-                String::from("Charlie"),
-                String::from("Keith"),
-                String::from("Mick"),
-            ]
-        );
-
-        assert_eq!(company, expected);
     }
 
     #[test]
-    fn does_not_sort_unknown_department() {
-        let expected = Company::from([(
-            String::from("Beatles"),
-            vec![String::from("Ringo"), String::from("George")],
-        )]);
+    fn get_multiple_list() {
         let mut company = Company::from([(
-            String::from("Beatles"),
-            vec![String::from("Ringo"), String::from("George")],
+            String::from("CLanguages"),
+            vec![String::from("C"), String::from("Java"), String::from("C++")],
         )]);
+        assert_eq!(
+            get_department_sorted_text(&mut company, &String::from("CLanguages")),
+            "CLanguages department has: C, C++, Java"
+        );
+    }
 
-        sort_department(&mut company, &String::from("RollingStones"));
-        assert_eq!(company, expected);
+    #[test]
+    fn get_no_department() {
+        let mut company = Company::new();
+        assert_eq!(
+            get_department_sorted_text(&mut company, &String::from("CLanguages")),
+            "There is no CLanguages department in the company, sorry!"
+        );
+    }
+
+    #[test]
+    fn get_empty_company() {
+        let mut company = Company::new();
+        assert_eq!(get_company_text(&mut company), "The company is empty!");
+    }
+
+    #[test]
+    fn get_one_department_company() {
+        let mut company = Company::from([(
+            String::from("X-Men"),
+            vec![
+                String::from("ProfessorX"),
+                String::from("Cyclop"),
+                String::from("Diablo"),
+            ],
+        )]);
+        assert_eq!(
+            get_company_text(&mut company),
+            "The company is composed of:\n\tX-Men\n\t\tX-Men department has: Cyclop, Diablo, ProfessorX"
+        );
     }
 }

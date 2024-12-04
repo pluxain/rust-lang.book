@@ -4,7 +4,7 @@
 
 use crate::action::{parse, Action, Command};
 use crate::prompt::prompt;
-use company::{add_to, remove_from, sort_department, Company};
+use company::{add_to, get_company_text, get_department_sorted_text, remove_from, Company};
 use log;
 use log4rs;
 
@@ -49,25 +49,13 @@ fn main() {
         match command {
             Command::Add => add_to(&mut company, department, employee.unwrap()),
             Command::Remove => remove_from(&mut company, department, employee.unwrap()),
-            Command::List => {
-                sort_department(&mut company, &department);
-                let opt = company.get(&department);
-                match opt {
-                    Some(d) => {
-                        let msg = format!(
-                            "Employees in {} department {} : {}",
-                            department,
-                            if d.len() > 1 { "are" } else { "is" },
-                            d.join(", ")
-                        );
-                        println!("{msg}");
-                    }
-                    None => println!(
-                        "There is not department {} in the company, sorry!",
-                        department
-                    ),
+            Command::List => match department.to_lowercase() {
+                _c if _c == String::from("company") => {
+                    println!("{}", get_company_text(&mut company))
                 }
-            }
+
+                _ => println!("{}", get_department_sorted_text(&mut company, &department)),
+            },
         }
         log::debug!("{:?}", company);
         continue;

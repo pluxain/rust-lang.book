@@ -1,6 +1,6 @@
 use log;
 use log4rs;
-use std::{env, fs, process};
+use std::{env, error::Error, fs, process};
 
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
@@ -15,7 +15,10 @@ fn main() {
     log::info!("Searching for `{}`", config.query);
     log::info!("in `{}`", config.file_path);
 
-    run(config);
+    if let Err(e) = run(config) {
+        log::error!("{}", e);
+        process::exit(1);
+    }
 }
 
 struct Config {
@@ -34,8 +37,8 @@ impl Config {
     }
 }
 
-fn run(config: Config) {
-    let file_content =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let file_content = fs::read_to_string(config.file_path)?;
     log::info!("With text:\n{file_content}");
+    Ok(())
 }

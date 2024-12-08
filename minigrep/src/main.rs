@@ -1,6 +1,8 @@
 use log;
 use log4rs;
-use std::{env, error::Error, fs, process};
+use std::{env, process};
+
+use minigrep::Config;
 
 fn main() {
     log4rs::init_file("config/logger.yaml", Default::default()).unwrap();
@@ -15,30 +17,8 @@ fn main() {
     log::info!("Searching for `{}`", config.query);
     log::info!("in `{}`", config.file_path);
 
-    if let Err(e) = run(config) {
+    if let Err(e) = minigrep::run(config) {
         log::error!("{}", e);
         process::exit(1);
     }
-}
-
-struct Config {
-    query: String,
-    file_path: String,
-}
-
-impl Config {
-    fn build(args: &[String]) -> Result<Self, &'static str> {
-        if args.len() < 3 {
-            return Err("not enough arguments");
-        }
-        let query = args[1].clone();
-        let file_path = args[2].clone();
-        Ok(Config { query, file_path })
-    }
-}
-
-fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let file_content = fs::read_to_string(config.file_path)?;
-    log::info!("With text:\n{file_content}");
-    Ok(())
 }

@@ -18,6 +18,9 @@ impl Config {
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let file_content = fs::read_to_string(config.file_path)?;
+    for line in search(&config.query, &file_content) {
+        log::info!("{}", line);
+    }
     Ok(())
 }
 

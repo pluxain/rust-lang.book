@@ -28,7 +28,7 @@ members = [
     "structs",
     "twelve-days-of-christmas",
     "variables",
-    "vectors",
+    "vectors", "minigrep",
 ]
 
 resolver = "1"

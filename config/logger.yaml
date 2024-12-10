@@ -2,9 +2,20 @@ refresh_rate: 30 seconds
 appenders:
   stdout:
     kind: console
+    target: stdout
     encoder:
       pattern: "{d} - {M} - {l} - {m}{n}"
+  stderr:
+    kind: console
+    filters:
+      - kind: threshold
+        level: error
+    target: stderr
+    encoder:
+      pattern: "{d} - {M} - {l} - {m}{n}"
+
 root:
   level: debug
   appenders:
     - stdout
+    - stderr
